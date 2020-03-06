@@ -17,6 +17,7 @@ const aviablechoices = ["rock", "paper","scissors","lizard","spock"];
 let personchoice = null;
 let computerchoice = null;
 
+
 for (let i = 0; i<5; i++){
     let idgrabber = "#"+aviablechoices[i];
          $(idgrabber).on("click", function (){
@@ -33,23 +34,25 @@ function getcomputerchoice(){
     console.log(computerchoice);
 };
 getcomputerchoice();
-
+let winlose = true;
 function comparetworesults(){
-if (personchoice === computerchoice)  {
+    
+    if (personchoice === computerchoice)  {
     console.log("tie");
 }  
 else {
 
-    let winlose = true;
 
 determinetext(personchoice, computerchoice);
-console.log(winlose);
+
      if (winlose === true){
 console.log('youlose');
 determinetext(computerchoice, personchoice);
+winlose=true;
     }
-  else if (winlose === false){
+  else {
       console.log('youwin');
+      winlose=true;
   }
 
 }
@@ -67,6 +70,5 @@ function determinetext(choice1, choice2){
         console.log(choice1 + " " + choicemethod[i] + " " + choice2)
         winlose = false;
      }
-
     };
 };
