@@ -40,9 +40,11 @@ let winlose = true;
 // This function will detmine if you won or not as well as call 
 // all necesary user interface adjusting functions
 function comparetworesults(){
-    
+    $("#youchoice").html("You chose:" + personchoice);
+    $("#computerchoice").html("The computer chose:" + computerchoice);
 if (personchoice === computerchoice)  {
     console.log("tie");
+    $("#status").html("tie");
 }  
 else {
 
@@ -50,18 +52,20 @@ else {
 
          if (winlose === true){
              console.log('youlose');
+             $("#status").html("You lose!");
              determinetext(computerchoice, personchoice);
              winlose = true;
              }
          else {
              console.log('youwin');
+             $("#status").html("You Win!");
              winlose = true;
              }
 
      }
 
 };
-// this will print out the text of why you won or lost
+// This will print out the text of why you won or lost
 function determinetext(choice1, choice2){
     let findchoicepower = choice1+"power";
     let findchoicemethod = choice1 +"method";
@@ -72,6 +76,7 @@ function determinetext(choice1, choice2){
      if (choicepower === choice2){
     
         console.log(choice1 + " " + choicemethod[i] + " " + choice2)
+        $("#explaination").html(choice1 + " " + choicemethod[i] + " " + choice2);
         winlose = false;
      }
     };
