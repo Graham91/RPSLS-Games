@@ -1,6 +1,5 @@
 console.log("connected");
 
-
 const rules = {
     rockpower: ["scissors", "lizard"],
     rockmethod: ["crushes", "crushes"],
@@ -13,11 +12,12 @@ const rules = {
     spockpower: ["scissors", "rock"],
     spockmethod: ["smashes", "vaporizes"]
 };
+
 const aviablechoices = ["rock", "paper","scissors","lizard","spock"];
 let personchoice = null;
 let computerchoice = null;
 
-
+// this sets all the buttons up to run the program
 for (let i = 0; i<5; i++){
     let idgrabber = "#"+aviablechoices[i];
          $(idgrabber).on("click", function (){
@@ -26,7 +26,8 @@ for (let i = 0; i<5; i++){
              comparetworesults();
         });
 }
-console.log(rules.paperpower)
+
+//This will pick a random computer choice.
 function getcomputerchoice(){
   
     let computerchoicenumber = Math.floor(Math.random() * Math.floor(5));
@@ -34,30 +35,33 @@ function getcomputerchoice(){
     console.log(computerchoice);
 };
 getcomputerchoice();
+
 let winlose = true;
+// This function will detmine if you won or not as well as call 
+// all necesary user interface adjusting functions
 function comparetworesults(){
     
-    if (personchoice === computerchoice)  {
+if (personchoice === computerchoice)  {
     console.log("tie");
 }  
 else {
 
+     determinetext(personchoice, computerchoice);
 
-determinetext(personchoice, computerchoice);
+         if (winlose === true){
+             console.log('youlose');
+             determinetext(computerchoice, personchoice);
+             winlose = true;
+             }
+         else {
+             console.log('youwin');
+             winlose = true;
+             }
 
-     if (winlose === true){
-console.log('youlose');
-determinetext(computerchoice, personchoice);
-winlose=true;
-    }
-  else {
-      console.log('youwin');
-      winlose=true;
-  }
+     }
 
-}
-
-}
+};
+// this will print out the text of why you won or lost
 function determinetext(choice1, choice2){
     let findchoicepower = choice1+"power";
     let findchoicemethod = choice1 +"method";
