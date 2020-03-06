@@ -1,0 +1,24 @@
+header{
+    text-align: center;
+}
+.buttons{
+    margin:auto;
+    background-color: beige;
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width:80%;
+}
+.buttons div{
+padding: 50px;
+border-style: solid;
+border-width: black;
+margin:10px;
+
+}
+#results{
+    text-align: center;
+    margin:auto;
+
+}
