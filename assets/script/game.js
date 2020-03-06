@@ -6,7 +6,7 @@ const rules = {
     paperpower: ["spock", "rock"],
     papermethod: ["disproves", "covers"],
     scissorspower: ["lizard", "paper"],
-    scissorsmethod: ["decapitates", "cuts"],
+    scissorsmethod: ["decapitate", "cut"],
     lizardpower: ["spock", "paper"],
     lizardmethod: ["poisons", "eats"],
     spockpower: ["scissors", "rock"],
@@ -40,11 +40,12 @@ let winlose = true;
 // This function will detmine if you won or not as well as call 
 // all necesary user interface adjusting functions
 function comparetworesults(){
-    $("#youchoice").html("You chose:" + personchoice);
-    $("#computerchoice").html("The computer chose:" + computerchoice);
+    $("#youchoice").html("You chose: " + personchoice);
+    $("#computerchoice").html("The computer chose: " + computerchoice);
 if (personchoice === computerchoice)  {
     console.log("tie");
     $("#status").html("tie");
+    $("#explaination").empty();
 }  
 else {
 
