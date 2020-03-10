@@ -4,33 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- css documents -->
+    <link rel="stylesheet" type="text/css" href="./assets/styling/style.css">
         <!-- jquery links -->
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <!-- firebase links -->
         <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+        
 </head>
 <body>
     <header>
 GAME
     </header>
-    <div id="rock">
-        rock
+
+    <div class=buttons>
+        <btn id="rock">
+            <div class="shadow4"></div>
+            <div class="shadow5"></div>
+            <img src="./assets/images/rock.png" class="image1">
+            <div class=shadow></div>
+            <div class=shadow1></div>
+            <div class=shadow2></div>
+            <div class="shadow3"></div>
+        </btn>    
+        <btn id="paper">
+            <div class="shadow4"></div>
+            <div class="shadow5"></div>
+            <img src="./assets/images/paper.png" class="image1">
+            <div class=shadow></div>
+            <div class=shadow1></div>
+            <div class=shadow2></div>
+            <div class="shadow3"></div>
+        </btn>
+        <btn id="scissors">
+            <div class="shadow4"></div>
+            <div class="shadow5"></div>
+            <img src="./assets/images/scissors.png" class="image1">
+            <div class=shadow></div>
+            <div class=shadow1></div>
+            <div class=shadow2></div>
+            <div class="shadow3"></div>
+        </btn>
+        <btn id="lizard">
+            <div class="shadow4"></div>
+            <div class="shadow5"></div>
+            <img src="./assets/images/lizard.png" class="image1">
+            <div class=shadow></div>
+            <div class=shadow1></div>
+            <div class=shadow2></div>
+            <div class="shadow3"></div>
+        </btn>
+        <btn id="spock">
+            <div class="shadow4"></div>
+            <div class="shadow5"></div>
+            <img src="./assets/images/spock.png" class="image1">
+            <div class=shadow></div>
+            <div class=shadow1></div>
+            <div class=shadow2></div>
+            <div class="shadow3"></div>
+        </btn>
     </div>
-    <div id="paper">
-        paper
-    </div>
-    <div id="scissors">
-        scissors
-    </div>
-    <div id="lizard">
-       lizard
-    </div>
-    <div id="spock">
-        spock
-    </div>
-    <div>
+    <div id=results>
         <div id=youchoice>
         </div>
         <div id=computerchoice>

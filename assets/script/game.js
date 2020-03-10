@@ -16,14 +16,49 @@ const rules = {
 const aviablechoices = ["rock", "paper","scissors","lizard","spock"];
 let personchoice = null;
 let computerchoice = null;
+let winlose = true;
+
+$("#rock").mousedown(function(){
+    $("#rock .shadow5").css("display", "block");
+    $("#rock .shadow4").css("display", "block");
+    $("#rock .shadow").css("display", "none");
+    $("#rock .shadow1").css("display", "none");
+    $("#rock .shadow2").css("display", "none");
+    $("#rock .shadow3").css("display", "none");
+
+});
 
 // this sets all the buttons up to run the program
 for (let i = 0; i<5; i++){
     let idgrabber = "#"+aviablechoices[i];
+    let locatorstring1 = idgrabber +" .shadow5";
+    let locatorstring2 = idgrabber +" .shadow4";
+    let locatorstring3 = idgrabber +" .shadow";
+    let locatorstring4 = idgrabber +" .shadow1";
+    let locatorstring5 = idgrabber +" .shadow2";
+    let locatorstring6 = idgrabber +" .shadow3";
+    $(idgrabber).mouseup(function(){
+       $(locatorstring1).css("display", "none");
+       $(locatorstring2).css("display", "none");
+       $(locatorstring3).css("display", "block");
+       $(locatorstring4).css("display", "block");
+       $(locatorstring5).css("display", "block");
+       $(locatorstring6).css("display", "block");
+     });
+     $(idgrabber).mousedown(function(){
+        $(locatorstring1).css("display", "block");
+        $(locatorstring2).css("display", "block");
+        $(locatorstring3).css("display", "none");
+        $(locatorstring4).css("display", "none");
+        $(locatorstring5).css("display", "none");
+        $(locatorstring6).css("display", "none");
+    
+    });
          $(idgrabber).on("click", function (){
               personchoice = aviablechoices[i];
              console.log(personchoice);
              comparetworesults();
+             
         });
 }
 
@@ -36,7 +71,7 @@ function getcomputerchoice(){
 };
 getcomputerchoice();
 
-let winlose = true;
+
 // This function will detmine if you won or not as well as call 
 // all necesary user interface adjusting functions
 function comparetworesults(){
