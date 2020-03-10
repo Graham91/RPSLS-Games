@@ -6,15 +6,21 @@ header{
     height: 100px;
     width: 100px;
 }
+/* media query for width on a cell phone */
+
 .buttons{
     margin: 0 auto;
-    background-color: beige;
-    padding: 50px;
+    background-color: rgb(202, 202, 190);
+    padding: 10px 5px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     width:80%;
+    border-style: inset;
+    border-width: 10px;
+    border-color: rgb(240, 240, 228);
 }
+/* media query for margin: 0 auto when screen get bigger than the buttons */
 .buttons btn{
 height: 100px;
 width: 100px;
@@ -23,6 +29,7 @@ border-width: 10px;
 border-color: rgb(240, 240, 228);
 margin:10px;
 position: relative;
+margin: 10px ;
 
 }
 #results{
@@ -38,7 +45,8 @@ position: relative;
     opacity: 40%;
     position: relative;
     bottom: 4px;
-    left: 7.5px
+    left: 7.5px;
+    z-index: 1;
   }
   .shadow1 {
         width: 0;
@@ -49,6 +57,7 @@ position: relative;
     bottom: 19px;
     left: 100px;
     opacity: 40%;
+    z-index: 1;
   }
   .shadow2{
       height: 85px;
@@ -58,6 +67,7 @@ position: relative;
     position: relative;
     bottom: 119px;
     left: 100px;
+    z-index: 1;
   }
   .shadow3 {
 width: 0;
@@ -68,6 +78,7 @@ position: relative;
 bottom: 219px;
 left: 100px;
 opacity: 40%;
+z-index: 1;
 }
 
 
