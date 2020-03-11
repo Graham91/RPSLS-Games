@@ -56,6 +56,7 @@ header{
     #status{
         justify-content: center;
         margin:20px;
+        margin-top: 10px;
         background-color:  rgb(202, 202, 190);
         border-style: inset;
         border-width: 10px;
@@ -63,6 +64,9 @@ header{
         grid-column-start: 2;
         grid-column-end:span 2  ;
         grid-row-start: 2;
+        font-size: 50px; 
+        text-align: center;
+        padding-top:25px ;
     }
 /* media query for width on a cell phone */
 
