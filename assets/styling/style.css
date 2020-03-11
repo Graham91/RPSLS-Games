@@ -6,6 +6,64 @@ header{
     height: 100px;
     width: 100px;
 }
+.image2{
+    height: 140px;
+    width: 140px;
+    margin: 6px 15px;
+    border-style: inset;
+    border-width: 5px;
+    border-color: rgb(202, 202, 190); 
+}
+#explaination{
+    font-size: 25px; 
+    text-align: center;
+    margin-top: 30px;
+}
+
+
+#lowerbox{
+    display: grid;
+    margin: 0 auto;
+    justify-content: center;
+        grid-template-columns: 300px 250px 250px;
+        grid-template-rows: 220px 180px; 
+        grid-column-gap: auto;
+        grid-row-gap: 20px;
+}
+
+#statsbox{
+    margin:20px;
+    background-color:  rgb(202, 202, 190);
+    border-style: outset;
+    border-width: 10px;
+    border-color: rgb(240, 240, 228); 
+    grid-column-start: 1;
+    grid-row-start: 1;
+    grid-row-end: span 2;
+}
+#results{
+    margin:20px;
+    display: flex;
+    justify-content: center;
+    background-color:  rgb(202, 202, 190);
+    border-style: inset;
+    border-width: 10px;
+    border-color: rgb(240, 240, 228); 
+    grid-column-start: 2;
+    grid-column-end:span 2  ;
+    grid-row-start: 1;
+    }
+    #status{
+        justify-content: center;
+        margin:20px;
+        background-color:  rgb(202, 202, 190);
+        border-style: inset;
+        border-width: 10px;
+        border-color: rgb(240, 240, 228); 
+        grid-column-start: 2;
+        grid-column-end:span 2  ;
+        grid-row-start: 2;
+    }
 /* media query for width on a cell phone */
 
 .buttons{
@@ -15,7 +73,8 @@ header{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width:80%;
+    width: 80%;
+    max-width:1000px;
     border-style: inset;
     border-width: 10px;
     border-color: rgb(240, 240, 228);
@@ -29,14 +88,10 @@ border-width: 10px;
 border-color: rgb(240, 240, 228);
 margin:10px;
 position: relative;
-margin: 10px ;
+
 
 }
-#results{
-    text-align: center;
-    margin:auto;
 
-}
 .shadow {
     width: 100px;
     height: 15px;

@@ -18,15 +18,7 @@ let personchoice = null;
 let computerchoice = null;
 let winlose = true;
 
-$("#rock").mousedown(function(){
-    $("#rock .shadow5").css("display", "block");
-    $("#rock .shadow4").css("display", "block");
-    $("#rock .shadow").css("display", "none");
-    $("#rock .shadow1").css("display", "none");
-    $("#rock .shadow2").css("display", "none");
-    $("#rock .shadow3").css("display", "none");
 
-});
 
 // this sets all the buttons up to run the program
 for (let i = 0; i<5; i++){
@@ -76,7 +68,8 @@ getcomputerchoice();
 // all necesary user interface adjusting functions
 function comparetworesults(){
     $("#youchoice").html("You chose: " + personchoice);
-    $("#computerchoice").html("The computer chose: " + computerchoice);
+    $("#youchoice").html("<img src='./assets/images/"+ personchoice +".png' class='image2'>");
+    $("#computerchoice").html("<img src='./assets/images/"+ computerchoice +".png' class='image2'>");
 if (personchoice === computerchoice)  {
     console.log("tie");
     $("#status").html("tie");
@@ -112,7 +105,7 @@ function determinetext(choice1, choice2){
      if (choicepower === choice2){
     
         console.log(choice1 + " " + choicemethod[i] + " " + choice2)
-        $("#explaination").html(choice1 + " " + choicemethod[i] + " " + choice2);
+        $("#explaination").html(choice1 + "<br>" + choicemethod[i] + "<br>" + choice2);
         winlose = false;
      }
     };
