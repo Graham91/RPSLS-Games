@@ -72,7 +72,7 @@ function comparetworesults(){
     $("#computerchoice").html("<img src='./assets/images/"+ computerchoice +".png' class='image2'>");
 if (personchoice === computerchoice)  {
     console.log("tie");
-    $("#status").html("tie");
+    $("#status").html("Tie");
     $("#explaination").empty();
 }  
 else {
@@ -81,7 +81,7 @@ else {
 
          if (winlose === true){
              console.log('youlose');
-             $("#status").html("You lose!");
+             $("#status").html("You Lose!");
              determinetext(computerchoice, personchoice);
              winlose = true;
              }

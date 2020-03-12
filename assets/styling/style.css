@@ -1,3 +1,9 @@
+
+body{background-image: url("../images/background1.png");
+    background-size: 200px 200px;
+    margin: 0;
+}
+
 header{
     text-align: center;
     font-size: xx-large;
@@ -19,7 +25,17 @@ header{
     text-align: center;
     margin-top: 30px;
 }
-
+#totalgame{
+    width: 800px;
+    padding-top: 25px;
+    padding-bottom: 5px;
+    margin: 0 auto;
+    margin-top: 30px;
+    background-color: rgb(250, 244, 232);
+    border-style: outset;
+    border-width: 20px;
+    border-color: rgb(240, 240, 228);
+}
 
 #lowerbox{
     display: grid;
@@ -31,10 +47,21 @@ header{
         grid-row-gap: 20px;
 }
 
+#navbar{
+    height: 40px;
+    width: 100%;
+    background:rgb(202, 202, 190);
+
+}
+#navbar2{
+    height: 10px;
+    width: 100%;
+    background:rgb(141, 141, 128);
+}
 #statsbox{
     margin:20px;
     background-color:  rgb(202, 202, 190);
-    border-style: outset;
+    border-style: inset;
     border-width: 10px;
     border-color: rgb(240, 240, 228); 
     grid-column-start: 1;
@@ -77,7 +104,7 @@ header{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: 80%;
+    width: 725px;
     max-width:1000px;
     border-style: inset;
     border-width: 10px;
