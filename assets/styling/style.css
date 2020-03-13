@@ -37,7 +37,15 @@ header{
     border-width: 20px;
     border-color: rgb(240, 240, 228);
 }
-
+.dropdownbutton{
+    height: 35px;
+    width:35px;
+    border-style: outset;
+    border-width: 5px;
+    border-color: rgb(240, 240, 228); 
+    position: relative;
+    top:7px;
+}
 #lowerbox{
     display: grid;
     margin: 0 auto;

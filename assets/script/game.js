@@ -63,6 +63,11 @@ function getcomputerchoice(){
 };
 getcomputerchoice();
 
+$(".dropdownbutton").mousedown(function(){
+    $("#navigatorspace").empty();
+    $("#navigatorspace").append("<img src='./assets/images/dropdownmenu2.png' class='dropdownbutton'>");
+    $(".dropdownbutton").css("border-style", "inset");
+});
 
 // This function will detmine if you won or not as well as call 
 // all necesary user interface adjusting functions
