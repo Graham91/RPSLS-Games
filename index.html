@@ -1,92 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <!-- css documents -->
     <link rel="stylesheet" type="text/css" href="./assets/styling/style.css">
-        <!-- jquery links -->
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <!-- firebase links -->
-        <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
-        
+    <!-- jquery links -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- firebase links -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+
 </head>
+
 <body>
-<header id="navbar">
-    <div id="title">RPSLS</div>
-    <div id="navigatorspace">
-        <img src="./assets/images/dropdownmenu.png" class="dropdownbutton">
-    </div>
-</header>
-<div id="navbar3"></div>
-<div id="navbar2"></div>
-<div id="totalgame">
-    <div class=buttons>
-        <btn id="rock">
-            <div class="shadow4"></div>
-            <div class="shadow5"></div>
-            <img src="./assets/images/rock.png" class="image1">
-            <div class=shadow></div>
-            <div class=shadow1></div>
-            <div class=shadow2></div>
-            <div class="shadow3"></div>
-        </btn>    
-        <btn id="paper">
-            <div class="shadow4"></div>
-            <div class="shadow5"></div>
-            <img src="./assets/images/paper.png" class="image1">
-            <div class=shadow></div>
-            <div class=shadow1></div>
-            <div class=shadow2></div>
-            <div class="shadow3"></div>
-        </btn>
-        <btn id="scissors">
-            <div class="shadow4"></div>
-            <div class="shadow5"></div>
-            <img src="./assets/images/scissors.png" class="image1">
-            <div class=shadow></div>
-            <div class=shadow1></div>
-            <div class=shadow2></div>
-            <div class="shadow3"></div>
-        </btn>
-        <btn id="lizard">
-            <div class="shadow4"></div>
-            <div class="shadow5"></div>
-            <img src="./assets/images/lizard.png" class="image1">
-            <div class=shadow></div>
-            <div class=shadow1></div>
-            <div class=shadow2></div>
-            <div class="shadow3"></div>
-        </btn>
-        <btn id="spock">
-            <div class="shadow4"></div>
-            <div class="shadow5"></div>
-            <img src="./assets/images/spock.png" class="image1">
-            <div class=shadow></div>
-            <div class=shadow1></div>
-            <div class=shadow2></div>
-            <div class="shadow3"></div>
-        </btn>
-    </div>
-    <div id="lowerbox">
-        <div id="statsbox">
-            stats box
+    <div class=background></div>
+    <!-- <header id="navbar">
+        <div id="title">RPSLS</div>
+        <div id="navigatorspace">
+            <img src="./assets/images/dropdownmenu.png" class="dropdownbutton">
         </div>
+    </header>
+    <div id="navbar3"></div>
+    <div id="navbar2"></div> -->
+    <div id="totalgame">
+        <div class=buttons>
+            <btn id="rock">
+                <div class="shadow4"></div>
+                <div class="shadow5"></div>
+                <img src="./assets/images/rock.png" class="image1">
+                <div class=shadow></div>
+                <div class=shadow1></div>
+                <div class=shadow2></div>
+                <div class="shadow3"></div>
+            </btn>
+            <btn id="paper">
+                <div class="shadow4"></div>
+                <div class="shadow5"></div>
+                <img src="./assets/images/paper.png" class="image1">
+                <div class=shadow></div>
+                <div class=shadow1></div>
+                <div class=shadow2></div>
+                <div class="shadow3"></div>
+            </btn>
+            <btn id="scissors">
+                <div class="shadow4"></div>
+                <div class="shadow5"></div>
+                <img src="./assets/images/scissors.png" class="image1">
+                <div class=shadow></div>
+                <div class=shadow1></div>
+                <div class=shadow2></div>
+                <div class="shadow3"></div>
+            </btn>
+            <btn id="lizard">
+                <div class="shadow4"></div>
+                <div class="shadow5"></div>
+                <img src="./assets/images/lizard.png" class="image1">
+                <div class=shadow></div>
+                <div class=shadow1></div>
+                <div class=shadow2></div>
+                <div class="shadow3"></div>
+            </btn>
+            <btn id="spock">
+                <div class="shadow4"></div>
+                <div class="shadow5"></div>
+                <img src="./assets/images/spock.png" class="image1">
+                <div class=shadow></div>
+                <div class=shadow1></div>
+                <div class=shadow2></div>
+                <div class="shadow3"></div>
+            </btn>
+        </div>
+        <!-- <div id="lowerbox">
+            <div id="statsbox">
+                stats box
+            </div> -->
         <div id=results>
-              <div id=youchoice>
-              </div>
-              <div id=explaination>
-              </div>
-              <div id=computerchoice>
-              </div>
+            <div id=youchoice>
+            </div>
+            <div id=explaination>
+            </div>
+            <div id=computerchoice>
+            </div>
         </div>
-        <div id=status>
+        <!-- <div id=status>
         </div>
+    </div> -->
     </div>
-</div>
-    <script src="./assets/script/game.js"></script> 
+    <div class=imagecontainer>
+        <img src="https://i.imgur.com/bCtk3TX.png" class="lizard">
+        <img src="https://i.imgur.com/h7uJb8Q.png" class="lizardshadow">
+        <div class=testsquare></div>
+        <img src="https://i.imgur.com/5FofVqO.png" class="scissors">
+        <img src="https://i.imgur.com/BoQGeXw.png" class="scissorshadow">
+        <img src="https://i.imgur.com/J9sI6HI.png" class="paper">
+        <img src="https://i.imgur.com/FcVAcpB.png" class="papershadow">
+        <img src="https://i.imgur.com/G7lyt5N.png" class="rock slide">
+        <img src="https://i.imgur.com/q4ngXQW.png" class="rockshadow slide">
+        <img src="https://i.imgur.com/fGy6Rxv.png" class="spock slide">
+        <img src="https://i.imgur.com/B22v3Uz.png" class="spockshadow">
+    </div>
+    <script src="./assets/script/game.js"></script>
 </body>
+
 </html>
