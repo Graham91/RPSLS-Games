@@ -1,10 +1,18 @@
+@font-face {
+  font-family: myFirstFont;
+  src: url(./../Sandbox\ Melodrama.ttf);
+}
+
 body {
+  font-family: myFirstFont;
+  color: white;
   background-image: url("../images/background1.png");
   background-size: 250px 250px;
   margin: 0;
   overflow-y: hidden;
   overflow-x: hidden;
 }
+
 .background {
   position: fixed;
   width: 100%;
@@ -45,8 +53,8 @@ header {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 730px;
-  padding-top: 25px;
-  padding-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 0px;
   /* margin: auto auto; */
   background-color: rgb(250, 244, 232);
   border-style: solid;
@@ -54,6 +62,21 @@ header {
   border-color: rgb(66, 122, 64);
   border-radius: 50px;
   z-index: 60;
+}
+.win {
+  -webkit-box-shadow: 0px 0px 89px 15px rgba(24, 255, 3, 0.59);
+  -moz-box-shadow: 0px 0px 89px 15px rgba(24, 255, 3, 0.59);
+  box-shadow: 0px 0px 89px 15px rgba(24, 255, 3, 0.59);
+}
+.loss {
+  -webkit-box-shadow: 0px 0px 89px 15px rgba(255, 0, 0, 1);
+  -moz-box-shadow: 0px 0px 89px 15px rgba(255, 0, 0, 1);
+  box-shadow: 0px 0px 89px 15px rgba(255, 0, 0, 1);
+}
+.tie {
+  -webkit-box-shadow: 0px 0px 89px 15px rgba(255, 255, 0, 1);
+  -moz-box-shadow: 0px 0px 89px 15px rgba(255, 255, 0, 1);
+  box-shadow: 0px 0px 89px 15px rgba(255, 255, 0, 1);
 }
 .dropdownbutton {
   height: 35px;
@@ -116,17 +139,62 @@ header {
   grid-row-start: 1;
   grid-row-end: span 2;
 }
+.yourScore {
+  height: 200px;
+
+  width: 120px;
+  border: solid 10px rgb(66, 122, 64);
+  border-width: 10px 10px 0 0;
+  border-radius: 0 30px 0 30px;
+  background-color: grey;
+  background-image: url("https://i.imgur.com/XvCYR7J.jpg");
+}
+.theirScore {
+  height: 200px;
+
+  width: 120px;
+  border: solid 10px rgb(66, 122, 64);
+  border-width: 10px 0 0 10px;
+  border-radius: 30px 0 30px 0;
+  background-image: url("https://i.imgur.com/XvCYR7J.jpg");
+}
+.bottomdiv {
+  display: flex;
+  justify-content: space-between;
+}
 #results {
-  margin: 20px;
+  margin: 2px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
-  background-color: rgb(202, 202, 190);
+  background-image: url("https://i.imgur.com/XvCYR7J.jpg");
   border-style: inset;
   border-width: 10px;
   border-color: rgb(240, 240, 228);
+  width: 435px;
+  height: 160px;
   grid-column-start: 2;
   grid-column-end: span 2;
   grid-row-start: 1;
+}
+.winsandlosses {
+  text-decoration: underline;
+  font-size: 1.5em;
+  margin-left: 10px;
+  margin-bottom: 0px;
+  padding-bottom: 0;
+}
+.scoresection {
+  margin-top: 90px;
+  display: flex;
+  height: 60px;
+}
+.scorenumber {
+  margin-top: 0;
+  padding-top: 0;
+  text-align: center;
+  font-size: 3em;
+  margin-left: 10px;
 }
 #status {
   justify-content: center;
@@ -699,12 +767,15 @@ header {
   padding: 10px 5px;
   display: flex;
   justify-content: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
   flex-wrap: wrap;
   /* width: 725px; */
   max-width: 1000px;
-  border-style: inset;
+  /* border-style: inset;
   border-width: 10px;
-  border-color: rgb(240, 240, 228);
+  border-color: rgb(240, 240, 228); */
   border-radius: 20px;
 }
 /* media query for margin: 0 auto when screen get bigger than the buttons */
