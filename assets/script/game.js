@@ -17,6 +17,10 @@ const aviablechoices = ["rock", "paper", "scissors", "lizard", "spock"];
 let personchoice = null;
 let computerchoice = null;
 let winlose = true;
+let yournumberwin;
+let yournumberloss;
+let theirnumberwin;
+let theirnumberloss;
 
 // this sets all the buttons up to run the program
 for (let i = 0; i < 5; i++) {
@@ -92,6 +96,11 @@ function comparetworesults() {
       setTimeout(function () {
         $("#totalgame").removeClass("loss");
       }, 2000);
+      yournumberloss = parseInt($("#yourlossnumber").html());
+      theirnumberwin = parseInt($("#theirwinnumber").html());
+      $("#yourlossnumber").html(yournumberloss + 1);
+      $("#theirwinnumber").html(theirnumberwin + 1);
+
       determinetext(computerchoice, personchoice);
       winlose = true;
     } else {
@@ -100,6 +109,10 @@ function comparetworesults() {
       setTimeout(function () {
         $("#totalgame").removeClass("win");
       }, 2000);
+      yournumberwin = parseInt($("#yourwinnumber").html());
+      theirnumberloss = parseInt($("#theirlossnumber").html());
+      $("#yourwinnumber").html(yournumberwin + 1);
+      $("#theirlossnumber").html(theirnumberloss + 1);
       winlose = true;
     }
   }
