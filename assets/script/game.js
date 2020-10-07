@@ -24,11 +24,13 @@ let theirnumberloss;
 let settingsclosed = true;
 $("#settings").on("click", function () {
   if (settingsclosed === true) {
+    $(".rightsidemodule").css("z-index", "100");
     $("#totalgame").css(
       "transform",
       "rotate(-90deg) translate(200px, -800px)" /* For modern browsers(CSS3)  */
     );
     $("#settings").css("right", "200px");
+    $(".rightsidemodule").css("opacity", "0.3");
     settingsclosed = false;
   } else {
     $("#totalgame").css(
@@ -36,6 +38,11 @@ $("#settings").on("click", function () {
       "rotate(0) translate(-50%, -50%)" /* For modern browsers(CSS3)  */
     );
     $("#settings").css("right", "50px");
+    $(".rightsidemodule").css("opacity", "0");
+
+    setTimeout(function () {
+      $(".rightsidemodule").css("z-index", "19");
+    }, 1000);
     settingsclosed = true;
   }
   console.log("button worked");

@@ -198,6 +198,19 @@ header {
   font-size: 4em;
   text-shadow: black;
 }
+.rightsidemodule {
+  position: fixed;
+  top: 0;
+  z-index: 19;
+  width: 50vw;
+  height: 100%;
+  background-color: black;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -webkit-transition: opacity 1s ease-in-out;
+}
+
 .rotated {
   transform: rotate(90deg);
   -ms-transform: rotate(90deg); /* IE 9 */
