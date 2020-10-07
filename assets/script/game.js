@@ -21,7 +21,25 @@ let yournumberwin;
 let yournumberloss;
 let theirnumberwin;
 let theirnumberloss;
-
+let settingsclosed = true;
+$("#settings").on("click", function () {
+  if (settingsclosed === true) {
+    $("#totalgame").css(
+      "transform",
+      "rotate(-90deg) translate(200px, -800px)" /* For modern browsers(CSS3)  */
+    );
+    $("#settings").css("right", "200px");
+    settingsclosed = false;
+  } else {
+    $("#totalgame").css(
+      "transform",
+      "rotate(0) translate(-50%, -50%)" /* For modern browsers(CSS3)  */
+    );
+    $("#settings").css("right", "50px");
+    settingsclosed = true;
+  }
+  console.log("button worked");
+});
 // this sets all the buttons up to run the program
 for (let i = 0; i < 5; i++) {
   let idgrabber = "#" + aviablechoices[i];
