@@ -813,7 +813,7 @@ header {
   border-radius: 20px;
 }
 /* media query for margin: 0 auto when screen get bigger than the buttons */
-.buttons btn {
+/* .buttons btn {
   height: 100px;
   width: 100px;
   border-style: outset;
@@ -821,8 +821,8 @@ header {
   border-color: rgb(240, 240, 228);
   margin: 10px;
   position: relative;
-}
-
+} */
+/* 
 .shadow {
   width: 100px;
   height: 15px;
@@ -865,24 +865,187 @@ header {
   left: 100px;
   opacity: 40%;
   z-index: 1;
+} */
+
+.imagewindow {
+  height: 100px;
+  width: 100px;
+  overflow: hidden;
+  transition-duration: 2s;
+  border-style: outset;
+  border-width: 10px;
+  border-color: rgb(240, 240, 228);
+  margin: 10px;
+}
+
+.shadowcontainer {
+  top: 25px;
+  right: -5px;
+  width: 15px;
+  position: absolute;
+  overflow: hidden;
+  height: 85px;
+  text-align: left;
+}
+
+.shadowcontainer2 {
+  top: 10px;
+  right: -5px;
+  width: 15px;
+  position: absolute;
+  overflow: hidden;
+  height: 15px;
+  text-align: right;
+}
+
+.shadowcontainer3 {
+  width: 15px;
+  right: -5px;
+  top: 110px;
+  position: absolute;
+  overflow: hidden;
+  height: 15px;
+  text-align: right;
+}
+
+.shadowcontainer4 {
+  width: 85px;
+  position: absolute;
+  overflow: hidden;
+  height: 15px;
+  text-align: right;
+  right: 10px;
+  top: 110px;
+}
+
+.shadowcontainer5 {
+  width: 15px;
+  position: absolute;
+  overflow: hidden;
+  height: 15px;
+  text-align: right;
+  right: 95px;
+  top: 110px;
+}
+
+.shadowcontainer6 {
+  width: 100px;
+  position: absolute;
+  overflow: hidden;
+  height: 0px;
+  text-align: right;
+  right: 10px;
+  top: 10px;
+}
+
+.shadowcontainer7 {
+  width: 0px;
+  position: absolute;
+  overflow: hidden;
+  height: 100px;
+  text-align: right;
+  right: 110px;
+  top: 10px;
+}
+
+.shadowcontainer8 {
+  width: 0px;
+  position: absolute;
+  overflow: hidden;
+  height: 0px;
+  text-align: right;
+  right: 110px;
+  top: 10px;
+}
+
+.box {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 200px;
+  background-color: black;
+  background-position: right;
+  opacity: 0.5;
+}
+
+.img {
+  height: 7200px;
+  width: 100px;
+  background-size: 100px 1800px;
+  background-repeat: repeat-y;
+  background-image: url("https://i.imgur.com/BBCQZ6A.png");
+}
+
+.triangle {
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  background: linear-gradient(to right top, black 50%, transparent 50%);
+  opacity: 0.5;
+}
+
+.triangle3 {
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  background: linear-gradient(to left bottom, black 50%, transparent 50%);
+  opacity: 0.5;
+}
+
+.shadowsbox {
+  position: relative;
+  top: 10px;
+  right: 10px;
 }
 
 .shadow4 {
   width: 5px;
   height: 95px;
-  top: 5px;
+  top: 15px;
+  right: 105px;
   position: absolute;
   background: black;
   opacity: 40%;
   z-index: 1;
   display: none;
 }
+
 .shadow5 {
   width: 100px;
   height: 5px;
+  top: 10px;
+  right: 10px;
   position: absolute;
   background: black;
   opacity: 40%;
   z-index: 1;
   display: none;
+}
+
+#lizardimg {
+  transition-duration: 4s;
+  margin-top: -200px;
+}
+#rockimg {
+  transition-duration: 2.8s;
+  margin-top: -300px;
+}
+#paperimg {
+  transition-duration: 3.2s;
+  margin-top: -400px;
+}
+#spockimg {
+  transition-duration: 4.4s;
+  margin-top: -100px;
+}
+#scissorsimg {
+  transition-duration: 3.6s;
+  margin-top: 0px;
+}
+#scissors {
+  /* position: relative; */
+  /* border: solid 5px black; */
 }

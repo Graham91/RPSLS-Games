@@ -12,6 +12,26 @@ const rules = {
   spockpower: ["scissors", "rock"],
   spockmethod: ["smashes", "vaporizes"],
 };
+const slotMechanismLocation = {
+  scissors: "-5400px",
+  spock: "-5500px",
+  lizard: "-5600px",
+  rock: "-5700px",
+  paper: "-5800px",
+  eats: "-5900px",
+  crushes1: "-6000px",
+  poisons: "-6100px",
+  crushes0: "-6200px",
+  smashes: "-6300px",
+  disproves: "-6400px",
+  vaporizes: "-6500px",
+  cut: "-6600px",
+  covers: "-6700px",
+  decapitate: "-6800px",
+  win: "-6900px",
+  you: "-7000px",
+  lose: "-7100px",
+};
 
 const aviablechoices = ["rock", "paper", "scissors", "lizard", "spock"];
 let personchoice = null;
@@ -22,6 +42,11 @@ let yournumberloss;
 let theirnumberwin;
 let theirnumberloss;
 let settingsclosed = true;
+let outcome;
+let newChoicemethod;
+let choiceplayer1;
+let choiceplayer2;
+let clicked = true;
 $("#settings").on("click", function () {
   if (settingsclosed === true) {
     $(".rightsidemodule").css("z-index", "100");
@@ -56,27 +81,136 @@ for (let i = 0; i < 5; i++) {
   let locatorstring4 = idgrabber + " .shadow1";
   let locatorstring5 = idgrabber + " .shadow2";
   let locatorstring6 = idgrabber + " .shadow3";
+  let locatorstring7 = idgrabber + " .shadow6";
+  let locatorstring8 = idgrabber + " .shadow7";
   $(idgrabber).mouseup(function () {
-    $(locatorstring1).css("display", "none");
-    $(locatorstring2).css("display", "none");
-    $(locatorstring3).css("display", "block");
-    $(locatorstring4).css("display", "block");
-    $(locatorstring5).css("display", "block");
-    $(locatorstring6).css("display", "block");
+    if (clicked === true) {
+      $(locatorstring1).css("display", "none");
+      $(locatorstring2).css("display", "none");
+      $(locatorstring7).css("display", "none");
+      $(locatorstring3).css("display", "block");
+      $(locatorstring4).css("display", "block");
+      $(locatorstring5).css("display", "block");
+      $(locatorstring6).css("display", "block");
+      $(locatorstring8).css("display", "block");
+    }
   });
   $(idgrabber).mousedown(function () {
-    $(locatorstring1).css("display", "block");
-    $(locatorstring2).css("display", "block");
-    $(locatorstring3).css("display", "none");
-    $(locatorstring4).css("display", "none");
-    $(locatorstring5).css("display", "none");
-    $(locatorstring6).css("display", "none");
+    if (clicked === true) {
+      $(locatorstring1).css("display", "block");
+      $(locatorstring2).css("display", "block");
+      $(locatorstring7).css("display", "block");
+      $(locatorstring3).css("display", "none");
+      $(locatorstring4).css("display", "none");
+      $(locatorstring5).css("display", "none");
+      $(locatorstring6).css("display", "none");
+      $(locatorstring8).css("display", "none");
+    }
   });
   $(idgrabber).on("click", function () {
-    personchoice = aviablechoices[i];
-    console.log(personchoice);
-    comparetworesults();
+    if (clicked === true) {
+      clicked = false;
+      personchoice = aviablechoices[i];
+      console.log(personchoice);
+      comparetworesults();
+    }
   });
+}
+
+function beginslotmachinewin(choice1, choice2, method, gamewinlose) {
+  setTimeout(function () {
+    $(".shadowcontainer").animate(
+      { width: "0", height: "100px", left: "-10px", top: "10px" },
+      1000
+    );
+    $(".shadowcontainer2").animate(
+      { width: "0", height: "0", left: "-10px" },
+      1000
+    );
+    $(".shadowcontainer3").animate(
+      { width: "0", height: "0", left: "-10px" },
+      1000
+    );
+    $(".shadowcontainer4").animate(
+      { width: "100px", height: "0", top: "110px", right: "10px" },
+      1000
+    );
+    $(".shadowcontainer5").animate(
+      { width: "0", height: "0", top: "110px", right: "110px" },
+      1000
+    );
+
+    setTimeout(function () {
+      $(".shadowcontainer6").animate(
+        { width: "95px", height: "5px", top: "10px", right: "10px" },
+        700
+      );
+      $(".shadowcontainer7").animate(
+        { width: "5", height: "95", top: "15px", right: "105px" },
+        700
+      );
+      $(".shadowcontainer8").animate(
+        { width: "5px", height: "5px", top: "10px", right: "105px" },
+        700
+      );
+
+      setTimeout(function () {
+        $("#rockimg").css("margin", choice1 + " 0px 0px 0px");
+        $("#paperimg").css("margin", method + " 0px 0px 0px");
+        $("#scissorsimg").css("margin", choice2 + " 0px 0px 0px");
+        $("#lizardimg").css("margin", "-7000px 0px 0px 0px");
+        $("#spockimg").css("margin", gamewinlose + " 0px 0px 0px");
+      }, 700);
+    }, 1000);
+  }, 1000);
+  setTimeout(function () {
+    $("#rockimg").css("margin", "-300px 0px 0px 0px");
+    $("#paperimg").css("margin", "-400px 0px 0px 0px");
+    $("#scissorsimg").css("margin", "0px 0px 0px 0px");
+    $("#lizardimg").css("margin", "-200px 0px 0px 0px");
+    $("#spockimg").css("margin", "-100px 0px 0px 0px");
+
+    setTimeout(function () {
+      $(".shadowcontainer6").animate(
+        { width: "100px", height: "0px", top: "10px", right: "10px" },
+        700
+      );
+      $(".shadowcontainer7").animate(
+        { width: "0", height: "100", top: "10px", right: "110px" },
+        700
+      );
+      $(".shadowcontainer8").animate(
+        { width: "0px", height: "0px", top: "10px", right: "110px" },
+        700
+      );
+
+      setTimeout(function () {
+        $(".shadowcontainer").animate(
+          { width: "15px", height: "85px", left: "-10px", top: "25px" },
+          1000
+        );
+        $(".shadowcontainer2").animate(
+          { width: "15px", height: "15px", left: "-10px" },
+          1000
+        );
+        $(".shadowcontainer3").animate(
+          { width: "15px", height: "15px", left: "-10px" },
+          1000
+        );
+        $(".shadowcontainer4").animate(
+          { width: "85px", height: "15px", top: "110px", right: "10px" },
+          1000
+        );
+        $(".shadowcontainer5").animate(
+          { width: "15px", height: "15px", top: "110px", right: "95px" },
+          1000
+        );
+        setTimeout(function () {
+          clicked = true;
+        }, 1000);
+      }, 700);
+    }, 4400);
+  }, 10000);
 }
 
 //This will pick a random computer choice.
@@ -107,6 +241,7 @@ function comparetworesults() {
   );
   if (personchoice === computerchoice) {
     console.log("tie");
+    outcome = "lose";
     $("#totalgame").addClass("tie");
     setTimeout(function () {
       $("#totalgame").removeClass("tie");
@@ -117,6 +252,7 @@ function comparetworesults() {
 
     if (winlose === true) {
       console.log("youlose");
+      outcome = "lose";
       $("#totalgame").addClass("loss");
       setTimeout(function () {
         $("#totalgame").removeClass("loss");
@@ -127,9 +263,16 @@ function comparetworesults() {
       $("#theirwinnumber").html(theirnumberwin + 1);
 
       determinetext(computerchoice, personchoice);
+      beginslotmachinewin(
+        slotMechanismLocation[choiceplayer1],
+        slotMechanismLocation[choiceplayer2],
+        slotMechanismLocation[newChoicemethod],
+        slotMechanismLocation[outcome]
+      );
       winlose = true;
     } else {
       console.log("youwin");
+      outcome = "win";
       $("#totalgame").addClass("win");
       setTimeout(function () {
         $("#totalgame").removeClass("win");
@@ -138,10 +281,17 @@ function comparetworesults() {
       theirnumberloss = parseInt($("#theirlossnumber").html());
       $("#yourwinnumber").html(yournumberwin + 1);
       $("#theirlossnumber").html(theirnumberloss + 1);
+      beginslotmachinewin(
+        slotMechanismLocation[choiceplayer1],
+        slotMechanismLocation[choiceplayer2],
+        slotMechanismLocation[newChoicemethod],
+        slotMechanismLocation[outcome]
+      );
       winlose = true;
     }
   }
 }
+
 // This will print out the text of why you won or lost
 function determinetext(choice1, choice2) {
   let findchoicepower = choice1 + "power";
@@ -155,6 +305,13 @@ function determinetext(choice1, choice2) {
       $("#explaination").html(
         choice1 + "<br>" + choicemethod[i] + "<br>" + choice2
       );
+      choiceplayer1 = choice1;
+      choiceplayer2 = choice2;
+      if (choicemethod[i] === "crushes") {
+        newChoicemethod = "crushes" + i;
+      } else {
+        newChoicemethod = choicemethod[i];
+      }
       winlose = false;
     }
   }
