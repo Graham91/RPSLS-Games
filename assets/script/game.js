@@ -246,6 +246,7 @@ function comparetworesults() {
     setTimeout(function () {
       $("#totalgame").removeClass("tie");
     }, 2000);
+    clicked = true;
     $("#explaination").empty();
   } else {
     determinetext(personchoice, computerchoice);
