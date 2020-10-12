@@ -1,4 +1,91 @@
 console.log("connected");
+var config = {
+  apiKey: "AIzaSyC88fbypXulQ4VXEeoQpjMn10-b60Bs234",
+  authDomain: "rpsls-game-1f6cb.firebaseapp.com",
+  databaseURL: "https://rpsls-game-1f6cb.firebaseio.com/",
+};
+
+firebase.initializeApp(config);
+var database = firebase.database();
+//base database
+var ref = database.ref();
+//main databaseobjects
+let aviable = ref.child("users");
+let game = ref.child("game");
+//find
+let findrachel = aviable.orderByChild("Name").equalTo("Yraham");
+findrachel.on("value", function (snapshot) {
+  console.log("worked");
+  console.log(snapshot.val());
+});
+//objects
+var userobject = {
+  Name: "Yraham",
+  available: true,
+  PIN: 1234,
+  requestRecieved: {},
+  requestmade: {},
+};
+gameobject = {
+  player1ID: "Yraham",
+  player2ID: "Graham",
+  player1choice: "null",
+  player2choice: "null",
+};
+//create
+// game.push(gameobject);
+// aviable.push(userobject);
+//update
+// function writeUserData(userId, name, email, imageUrl) {
+//   firebase
+//     .database()
+//     .ref("users/" + userId)
+//     .set({
+//       username: name,
+//       email: email,
+//       profile_picture: imageUrl,
+//     });
+// }
+
+//CREATE USER:
+//User inputs name and submits
+//database is queried for name
+//if name exist user is told name is unavialable
+//if name is aviable user is prompted to put in a pin
+//user is updated with pin
+//LOG-IN:
+//User inputs name and submits
+//Database is queried for name
+//if name exist user is directed to enter pin
+//User inputs pin
+//if pin matches the User is told they are logged in
+//userinformation is updated by changing available to true
+//user can now view avialable users and request status
+//VIEW AVAILABLE USERS:
+//database is queried for 10 users who are available
+//each user is then displayed in a list next to a request game button
+//updates every 10 secs
+//MAKE REQUEST:
+//user clicks request game button
+//current users made requests is updated
+//selected users request received is updated
+//both of these are displayed on user screen
+//REQUEST ACCEPTED:
+//If requested user is available
+//game is built
+//BUILD GAME:
+//Once a request is accepted a game is then generated with both player?ID
+//and both player?choice = "null"
+//userInformation is updated by emptying requestsRecieved & requestsMade for both players
+//userinformation is updated by changing available to false
+//game is queried using the player?id associated with the curent user
+//RESET GAME:
+//Player?choices returned too null
+//LEAVE GAME: When a player leaves a game the game is then deleted
+//game is found using the player?id associated with the curent user
+//userinformation is updated by changing available to true
+//LOG OUT:
+//userinformation is updated by changing available to false
 
 const rules = {
   rockpower: ["scissors", "lizard"],
