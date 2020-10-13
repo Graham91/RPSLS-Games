@@ -267,6 +267,39 @@ header {
 .directionheader:hover {
   color: black;
 }
+.instructions {
+  font-size: 0.5em;
+  color: white;
+  height: 10px;
+  margin: 10px;
+}
+.pinInput {
+  min-height: 10px;
+  /* padding: -10px; */
+  width: 170px;
+  height: 35px;
+  font-size: 0.5em;
+  font-family: myFirstFont;
+  color: black;
+  outline: none;
+  border: solid 4px rgba(255, 255, 255, 0.753);
+  background-color: rgba(255, 255, 255, 0.753);
+  border-radius: 20px;
+  display: block;
+  margin: 25px auto;
+  margin-bottom: 10px;
+  /* padding: -10px 10px -10px 10px; */
+  text-align: center;
+}
+#secondStageCreate {
+  display: none;
+}
+#firstStageCreate {
+  display: none;
+}
+#logout {
+  display: none;
+}
 .textinput {
   min-height: 10px;
   margin: 0;
@@ -288,13 +321,24 @@ header {
   border: solid 4px rgba(165, 165, 165, 0.753);
   background-color: rgba(165, 165, 165, 0.753);
 }
+#createuserPIN {
+  display: none;
+  width: 400px;
+}
+#logInMain {
+  display: none;
+}
+#LoginPIN {
+  display: none;
+  width: 400px;
+}
 .numberbuttoncontainer {
   height: 200px;
   width: 150px;
   /* justify-content: space-around; */
   border: solid 8px white;
   border-radius: 16px;
-  margin: 20px auto;
+  margin: 0 auto;
 }
 .winsandlosses {
   text-decoration: underline;

@@ -271,31 +271,77 @@
     <div class="rightsidemodule"></div>
     <div id="settings">Game Settings</div>
     <div class="settingstotaldiv">
+        <p id=welcomelogin></p>
         <div class="directionheader" id="logout">Log-Out</div>
         <div class="directionheader" id="logIn">Log-In:</div>
-        <input type="text" id="logininput" class="textinput" name="fname"><button class=submitText>Submit</button>
+        <div id=logInMain>
+            <p class=instructions>Enter Username:</p>
+            <input type="text" id="logininput" class="textinput" name="fname"><button class=submitText
+                id=submitLoginName>Submit</button>
+            <div id=LoginPIN>
+                <p class=instructions>Enter Your 4-digit Pin:</p>
+                <input type="text" id="logpinInput" class="pinInput" name="fname" maxlength="4"
+                    onkeypress='return event.charCode >= 48 && event.charCode <= 57' required>
+                <div class="numberbuttoncontainer">
+                    <div class=numberrow>
+                        <button class="numberbutton number1" id=number1Log>1</button>
+                        <button class="numberbutton" id=number2Log>2</button>
+                        <button class="numberbutton number3" id=number3Log>3</button>
+                    </div>
+                    <div class=numberrow>
+                        <button class=numberbutton id=number4Log>4</button>
+                        <button class=numberbutton id=number5Log>5</button>
+                        <button class=numberbutton id=number6Log>6</button>
+                    </div>
+                    <div class=numberrow>
+                        <button class=numberbutton id=number7Log>7</button>
+                        <button class=numberbutton id=number8Log>8</button>
+                        <button class=numberbutton id=number9Log>9</button>
+                    </div>
+                    <div class=numberrow>
+                        <button class="numberbutton number0" id="number0Log">0</button>
+                        <button class=submitpin id=submitLogIn>Submit</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
         <div class="directionheader" id="CreatUser">Create-User:</div>
-        <input type="text" id="fname" class="textinput" name="fname"><button class=submitText>Submit</button>
-        <div class="numberbuttoncontainer">
-            <div class=numberrow>
-                <button class="numberbutton number1">1</button>
-                <button class=numberbutton>2</button>
-                <button class="numberbutton number3">3</button>
+        <div id=firstStageCreate>
+            <p class=instructions>Choose Username:</p>
+            <input type="text" id="createuser" class="textinput" name="fname"><button class=submitText
+                id=CreateUserSubmit>Submit</button>
+            <div id=createuserPIN>
+                <p class=instructions>Select 4-digit Pin:</p>
+                <input type="text" id="createpinInput" class="pinInput" name="fname" maxlength="4"
+                    onkeypress='return event.charCode >= 48 && event.charCode <= 57' required>
+                <div class="numberbuttoncontainer">
+                    <div class=numberrow>
+                        <button class="numberbutton number1" id=number1Create>1</button>
+                        <button class="numberbutton" id=number2Create>2</button>
+                        <button class="numberbutton number3" id=number3Create>3</button>
+                    </div>
+                    <div class=numberrow>
+                        <button class=numberbutton id=number4Create>4</button>
+                        <button class=numberbutton id=number5Create>5</button>
+                        <button class=numberbutton id=number6Create>6</button>
+                    </div>
+                    <div class=numberrow>
+                        <button class=numberbutton id=number7Create>7</button>
+                        <button class=numberbutton id=number8Create>8</button>
+                        <button class=numberbutton id=number9Create>9</button>
+                    </div>
+                    <div class=numberrow>
+                        <button class="numberbutton number0" id="number0Create">0</button>
+                        <button class=submitpin id=submitCreatePin>Submit</button>
+                    </div>
+
+                </div>
             </div>
-            <div class=numberrow>
-                <button class=numberbutton>4</button>
-                <button class=numberbutton>5</button>
-                <button class=numberbutton>6</button>
-            </div>
-            <div class=numberrow>
-                <button class=numberbutton>7</button>
-                <button class=numberbutton>8</button>
-                <button class=numberbutton>9</button>
-            </div>
-            <div class=numberrow>
-                <button class="numberbutton number0">0</button>
-                <button class=submitpin>Submit</button>
-            </div>
+        </div>
+        <div id=secondStageCreate>
+            <p id=welcome></p>
+            <p class=instructions>Select an Avatar image:</p>
 
         </div>
     </div>

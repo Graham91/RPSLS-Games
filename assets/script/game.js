@@ -10,10 +10,10 @@ var database = firebase.database();
 //base database
 var ref = database.ref();
 //main databaseobjects
-let aviable = ref.child("users");
+let users = ref.child("users");
 let game = ref.child("game");
 //find
-let findrachel = aviable.orderByChild("Name").equalTo("Yraham");
+let findrachel = users.orderByChild("Name").equalTo("Yraham");
 findrachel.on("value", function (snapshot) {
   console.log("worked");
   console.log(snapshot.val());
@@ -34,7 +34,7 @@ gameobject = {
 };
 //create
 // game.push(gameobject);
-// aviable.push(userobject);
+// users.push(userobject);
 //update
 // function writeUserData(userId, name, email, imageUrl) {
 //   firebase
@@ -134,6 +134,7 @@ let newChoicemethod;
 let choiceplayer1;
 let choiceplayer2;
 let clicked = true;
+let locatedUserName;
 $("#settings").on("click", function () {
   if (settingsclosed === true) {
     $(".rightsidemodule").css("z-index", "100");
@@ -207,7 +208,113 @@ for (let i = 0; i < 5; i++) {
     }
   });
 }
+for (let index = 0; index < 10; index++) {
+  const setupbuttonslog = "#number" + index + "Log";
+  $(setupbuttonslog).on("click", function () {
+    let currentvallog = $("#logpinInput").val();
+    if (currentvallog.length < 4) {
+      $("#logpinInput").val(currentvallog + index);
+    }
+  });
+  const setupbuttonscreate = "#number" + index + "Create";
+  $(setupbuttonscreate).on("click", function () {
+    let currentval = $("#createpinInput").val();
+    if (currentval.length < 4) {
+      $("#createpinInput").val(currentval + index);
+    }
+  });
+}
+$("#logIn").on("click", function () {
+  $("#logInMain").css("display", "block");
+});
+// let LoginUserInput = $("#logpinInput").val();
+$("#submitLogIn").on("click", function () {
+  event.preventDefault();
+  let currentPinValue = $("#logpinInput").val();
+  if (currentPinValue.length < 4) {
+    $("#logpinInput").css("color", "red");
+    $("#logininput").val("Bad Pin");
+    setTimeout(function () {
+      $("#logpinInput").css("color", "black");
+    }, 500);
+  } else {
+    let objectname = Object.getOwnPropertyNames(locatedUserName);
+    let actualPIN = locatedUserName[objectname].PIN;
+    let userName = locatedUserName[objectname].Name;
+    if (currentPinValue === actualPIN) {
+      //logIn success
+      $("#welcomelogin").html("Welcome " + userName + "!");
+      $("#logInMain").css("display", "none");
+      $("#logIn").css("display", "none");
+      $("#logout").css("display", "block");
+      $("#CreatUser").css("display", "none");
+    } else {
+      $("#logpinInput").css("color", "red");
+      $("#logininput").val("Bad Pin");
+      setTimeout(function () {
+        $("#logpinInput").css("color", "black");
+      }, 500);
+    }
+  }
+});
 
+$("#submitLoginName").on("click", function () {
+  event.preventDefault();
+  let LoginUserInput = $("#logininput").val();
+  let checkifuserexists = users.orderByChild("Name").equalTo(LoginUserInput);
+  checkifuserexists.on("value", function (snapshot) {
+    if (snapshot.val() === null) {
+      $("#logininput").val("Username Not Found");
+    } else {
+      locatedUserName = snapshot.val();
+      $("#LoginPIN").css("display", "block");
+      $("#submitLoginName").css("display", "none");
+    }
+  });
+});
+$("#CreateUserSubmit").on("click", function () {
+  event.preventDefault();
+  let createUserInput = $("#createuser").val();
+  console.log(createUserInput);
+  let checkNameAvailability = users
+    .orderByChild("Name")
+    .equalTo(createUserInput);
+  checkNameAvailability.on("value", function (snapshot) {
+    if (snapshot.val() === null) {
+      console.log(snapshot.val());
+      $("#createuserPIN").css("display", "block");
+      $("#CreateUserSubmit").css("display", "none");
+    } else {
+      $("#createuser").val("Name Unavailable");
+    }
+  });
+});
+$("#CreatUser").on("click", function () {
+  $("#firstStageCreate").css("display", "block");
+});
+$("#submitCreatePin").on("click", function () {
+  event.preventDefault();
+  let currentPinValue = $("#createpinInput").val();
+  let createUserInput = $("#createuser").val();
+  if (currentPinValue.length < 4) {
+    $("#createpinInput").css("color", "red");
+    setTimeout(function () {
+      $("#createpinInput").css("color", "black");
+    }, 500);
+  } else {
+    var userobject = {
+      Name: createUserInput,
+      available: true,
+      PIN: currentPinValue,
+      requestRecieved: {},
+      requestmade: {},
+    };
+    users.push(userobject);
+    $("#firstStageCreate").css("display", "none");
+    $("#secondStageCreate").css("display", "block");
+    $("#welcome").html("Welcome " + createUserInput + "!");
+  }
+});
 function beginslotmachinewin(choice1, choice2, method, gamewinlose) {
   setTimeout(function () {
     $(".shadowcontainer").animate(
