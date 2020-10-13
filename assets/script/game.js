@@ -142,6 +142,8 @@ $("#settings").on("click", function () {
       "rotate(-90deg) translate(200px, -800px)" /* For modern browsers(CSS3)  */
     );
     $("#settings").css("right", "200px");
+    $("#settings").css("color", "white");
+    $(".settingstotaldiv").css("display", "block");
     $(".rightsidemodule").css("opacity", "0.3");
     settingsclosed = false;
   } else {
@@ -150,6 +152,8 @@ $("#settings").on("click", function () {
       "rotate(0) translate(-50%, -50%)" /* For modern browsers(CSS3)  */
     );
     $("#settings").css("right", "50px");
+    $(".settingstotaldiv").css("display", "none");
+    $("#settings").css("color", "rgb(36, 71, 35)");
     $(".rightsidemodule").css("opacity", "0");
 
     setTimeout(function () {

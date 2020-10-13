@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <!-- css documents -->
+    <link rel="stylesheet" type="text/css" href="./assets/styling/reset.css">
     <link rel="stylesheet" type="text/css" href="./assets/styling/style.css">
     <!-- jquery links -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -267,10 +268,37 @@
         <img src="https://i.imgur.com/fGy6Rxv.png" class="spock slide">
         <img src="https://i.imgur.com/B22v3Uz.png" class="spockshadow">
     </div>
-    <div id="settings">Game Settings
-
-    </div>
     <div class="rightsidemodule"></div>
+    <div id="settings">Game Settings</div>
+    <div class="settingstotaldiv">
+        <div class="directionheader" id="logout">Log-Out</div>
+        <div class="directionheader" id="logIn">Log-In:</div>
+        <input type="text" id="logininput" class="textinput" name="fname"><button class=submitText>Submit</button>
+        <div class="directionheader" id="CreatUser">Create-User:</div>
+        <input type="text" id="fname" class="textinput" name="fname"><button class=submitText>Submit</button>
+        <div class="numberbuttoncontainer">
+            <div class=numberrow>
+                <button class="numberbutton number1">1</button>
+                <button class=numberbutton>2</button>
+                <button class="numberbutton number3">3</button>
+            </div>
+            <div class=numberrow>
+                <button class=numberbutton>4</button>
+                <button class=numberbutton>5</button>
+                <button class=numberbutton>6</button>
+            </div>
+            <div class=numberrow>
+                <button class=numberbutton>7</button>
+                <button class=numberbutton>8</button>
+                <button class=numberbutton>9</button>
+            </div>
+            <div class=numberrow>
+                <button class="numberbutton number0">0</button>
+                <button class=submitpin>Submit</button>
+            </div>
+
+        </div>
+    </div>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
     <!-- Specific Firebase products we want (Database) -->
