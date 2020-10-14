@@ -13,10 +13,13 @@ var ref = database.ref();
 let users = ref.child("users");
 let game = ref.child("game");
 //find
-let findrachel = users.orderByChild("Name").equalTo("Yraham");
+let findrachel = users.orderByChild("available").equalTo(true).limitToLast(8);
 findrachel.on("value", function (snapshot) {
   console.log("worked");
   console.log(snapshot.val());
+  let avialableUsers = snapshot.val();
+  let usersKeys = Object.getOwnPropertyNames(avialableUsers);
+  console.log(usersKeys);
 });
 //objects
 var userobject = {
@@ -47,24 +50,6 @@ gameobject = {
 //     });
 // }
 
-//CREATE USER:
-//User inputs name and submits
-//database is queried for name
-//if name exist user is told name is unavialable
-//if name is aviable user is prompted to put in a pin
-//user is updated with pin
-//LOG-IN:
-//User inputs name and submits
-//Database is queried for name
-//if name exist user is directed to enter pin
-//User inputs pin
-//if pin matches the User is told they are logged in
-//userinformation is updated by changing available to true
-//user can now view avialable users and request status
-//VIEW AVAILABLE USERS:
-//database is queried for 10 users who are available
-//each user is then displayed in a list next to a request game button
-//updates every 10 secs
 //MAKE REQUEST:
 //user clicks request game button
 //current users made requests is updated
@@ -135,6 +120,7 @@ let choiceplayer1;
 let choiceplayer2;
 let clicked = true;
 let locatedUserName;
+//settings button action
 $("#settings").on("click", function () {
   if (settingsclosed === true) {
     $(".rightsidemodule").css("z-index", "100");
@@ -208,6 +194,7 @@ for (let i = 0; i < 5; i++) {
     }
   });
 }
+//Set up PIN pad for both logIn and createUser
 for (let index = 0; index < 10; index++) {
   const setupbuttonslog = "#number" + index + "Log";
   $(setupbuttonslog).on("click", function () {
@@ -224,10 +211,31 @@ for (let index = 0; index < 10; index++) {
     }
   });
 }
+//VIEW AVAILABLE USERS:
+//database is queried for 10 users who are available
+//each user is then displayed in a list next to a request game button
+//updates every 10 secs
+function findAvailableUser() {
+  let findUsers = users.orderByChild("available").equalTo(true).limitToLast(8);
+  findUsers.on("value", function (snapshot) {
+    console.log("worked");
+    let avialableUsers = snapshot.val();
+    let usersKeys = Object.getOwnPropertyNames(avialableUsers);
+    console.log(usersKeys);
+  });
+}
+
+//LOG-IN:
+//User inputs name and submits
+//Database is queried for name
+//if name exist user is directed to enter pin
+//User inputs pin
+//if pin matches the User is told they are logged in
+//userinformation is updated by changing available to true
+//user can now view avialable users and request status
 $("#logIn").on("click", function () {
   $("#logInMain").css("display", "block");
 });
-// let LoginUserInput = $("#logpinInput").val();
 $("#submitLogIn").on("click", function () {
   event.preventDefault();
   let currentPinValue = $("#logpinInput").val();
@@ -272,6 +280,15 @@ $("#submitLoginName").on("click", function () {
     }
   });
 });
+//CREATE USER:
+//User inputs name and submits
+//database is queried for name
+//if name exist user is told name is unavialable
+//if name is aviable user is prompted to put in a pin
+//user is updated with pin
+$("#CreatUser").on("click", function () {
+  $("#firstStageCreate").css("display", "block");
+});
 $("#CreateUserSubmit").on("click", function () {
   event.preventDefault();
   let createUserInput = $("#createuser").val();
@@ -288,9 +305,6 @@ $("#CreateUserSubmit").on("click", function () {
       $("#createuser").val("Name Unavailable");
     }
   });
-});
-$("#CreatUser").on("click", function () {
-  $("#firstStageCreate").css("display", "block");
 });
 $("#submitCreatePin").on("click", function () {
   event.preventDefault();
@@ -315,6 +329,7 @@ $("#submitCreatePin").on("click", function () {
     $("#welcome").html("Welcome " + createUserInput + "!");
   }
 });
+//animation for win/lose Game
 function beginslotmachinewin(choice1, choice2, method, gamewinlose) {
   setTimeout(function () {
     $(".shadowcontainer").animate(

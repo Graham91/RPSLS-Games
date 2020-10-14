@@ -332,6 +332,125 @@ header {
   display: none;
   width: 400px;
 }
+.finderusers {
+  margin-top: 20px;
+  width: 400px;
+  height: 290px;
+  border-radius: 30px;
+  border-color: white;
+  border-style: solid;
+  border-width: 6px 6px 0 6px;
+  background: rgb(24, 24, 24);
+  background: rgb(24, 24, 24);
+  background: linear-gradient(
+    347deg,
+    rgba(24, 24, 24, 0) 0%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+}
+#searchUserbar {
+  width: 380px;
+  height: 40px;
+  display: block;
+  margin: 15px auto;
+  text-align: center;
+  background-color: rgb(156, 156, 148, 0);
+  border-radius: 20px;
+  border: solid 2px black;
+  font-size: 0.6em;
+  color: black;
+  outline: none;
+  font-family: myFirstFont;
+}
+.usersBox {
+  width: 380px;
+  height: 200px;
+  border-radius: 20px;
+  border: solid 2px rgb(24, 24, 24);
+  margin: 0px auto;
+  overflow: hidden;
+}
+
+.usersBox2 {
+  width: 370px;
+  height: 180px;
+  /* border-radius: 20px; */
+  margin: 10px auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.avartarPlaceHolder {
+  display: flex;
+  height: 50px;
+  width: 50px;
+  border-radius: 35px;
+  background-color: rgba(255, 0, 0, 1);
+  margin: 5px;
+}
+.individualUser {
+  display: flex;
+  width: 340px;
+  height: 60px;
+  /* font-size: 0.5em; */
+  border-radius: 40px 15px 15px 40px;
+  border: solid 4px white;
+  margin: 5px auto;
+  justify-content: space-between;
+  background: rgb(24, 24, 24);
+  background: linear-gradient(
+    173deg,
+    rgba(24, 24, 24, 0) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+.userNameFindGame {
+  font-size: 0.6em;
+  width: 180px;
+}
+.requestbutton {
+  display: flex;
+  font-size: 0.3em;
+  width: 45px;
+  height: 35px;
+  border: solid 3px white;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 15px;
+  background: rgb(24, 24, 24);
+  background: linear-gradient(
+    173deg,
+    rgba(24, 24, 24, 0) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+.usersBox2::-webkit-scrollbar {
+  width: 10px; /* width of the entire scrollbar */
+}
+.usersBox2::-webkit-scrollbar-track {
+  /* color of the tracking area */
+  background-color: rgba(0, 0, 255, 0);
+}
+.usersBox2::-webkit-scrollbar-thumb {
+  height: 20%;
+  background-color: white; /* color of the scroll thumb */
+  border-radius: 5px; /* roundness of the scroll thumb */
+  /* creates padding around scroll thumb */
+}
+.usersBox::-webkit-scrollbar-button:end:increment {
+  height: 50%;
+  margin-top: 100px;
+  display: block;
+  background: transparent;
+}
+.requestbutton:hover {
+  border-color: black;
+  background: rgb(24, 24, 24);
+  background: linear-gradient(
+    173deg,
+    rgba(24, 24, 24, 0) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
 .numberbuttoncontainer {
   height: 200px;
   width: 150px;
