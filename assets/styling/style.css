@@ -291,8 +291,27 @@ header {
   /* padding: -10px 10px -10px 10px; */
   text-align: center;
 }
+.avatarchoice {
+  width: 105px;
+  margin: 5px auto;
+  display: block;
+}
+.avatarchoice2 {
+  height: 105px;
+  width: 105px;
+  margin: 10px;
+}
+.avatarchoice3 {
+  display: flex;
+  height: 60px;
+  width: 60px;
+  border-radius: 35px;
+}
 #secondStageCreate {
   display: none;
+}
+#findgamemain {
+  display: block;
 }
 #firstStageCreate {
   display: none;
@@ -396,12 +415,13 @@ header {
   border: solid 4px white;
   margin: 5px auto;
   justify-content: space-between;
-  background: rgb(24, 24, 24);
+  background-image: url("https://i.imgur.com/XvCYR7J.jpg");
+  /* background: rgb(24, 24, 24);
   background: linear-gradient(
     173deg,
     rgba(24, 24, 24, 0) 0%,
     rgba(0, 0, 0, 1) 100%
-  );
+  ); */
 }
 .userNameFindGame {
   font-size: 0.6em;
@@ -459,12 +479,17 @@ header {
   border-radius: 16px;
   margin: 0 auto;
 }
+#leftside {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
 .winsandlosses {
   text-decoration: underline;
   font-size: 1.5em;
   margin-left: 10px;
   margin-bottom: 0px;
   padding-bottom: 0;
+  height: 15px;
 }
 #settings {
   transition-duration: 1s;
@@ -475,6 +500,17 @@ header {
   color: rgb(36, 71, 35);
   font-size: 4em;
   /* text-shadow: black; */
+}
+.avatarchoicebox {
+  margin-top: 30px;
+  background-image: url("https://i.imgur.com/XvCYR7J.jpg");
+  width: 400px;
+  height: 260px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  border: solid 6px white;
+  border-radius: 60px;
 }
 .rightsidemodule {
   position: fixed;
@@ -497,9 +533,13 @@ header {
   -o-transform: rotate(90deg);
 }
 .scoresection {
-  margin-top: 90px;
+  margin-top: 0px;
   display: flex;
   height: 60px;
+}
+.playername {
+  font-size: 1.2em;
+  text-align: center;
 }
 .scorenumber {
   margin-top: 0;
@@ -544,6 +584,31 @@ header {
   -o-animation: orbit3 60s linear infinite; /* Opera 12+ */
   animation: orbit3 60s linear infinite;
 }
+.avatarshadowbox {
+  position: absolute;
+  width: 400px;
+  height: 260px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  /* border: solid 6px white; */
+}
+.avatarshadow {
+  height: 105px;
+  width: 105px;
+  margin: 10px;
+  border-radius: 55px;
+}
+.avatarshadow:hover {
+  height: 105px;
+  width: 105px;
+  margin: 10px;
+  border-radius: 55px;
+  -webkit-box-shadow: 0px 0px 76px 7px rgba(255, 255, 255, 0.75);
+  -moz-box-shadow: 0px 0px 76px 7px rgba(255, 255, 255, 0.75);
+  box-shadow: 0px 0px 76px 7px rgba(255, 255, 255, 0.75);
+}
+
 /* .testsquare {
   background-color: blueviolet;
   height: 40px;
