@@ -169,12 +169,14 @@ header {
   display: none;
   position: fixed;
   width: calc(50% - 40px);
-  right: 0px;
-  top: 0px;
+  height: calc(100vh - 120px);
+  right: 5px;
+  top: 100px;
   /* border: solid 2px black; */
   z-index: 100;
   font-size: 4em;
-  padding: 100px 20px 0px 20px;
+  padding: 0 20px 0px 20px;
+  overflow-y: scroll;
 }
 #results {
   margin: 2px;
@@ -308,9 +310,14 @@ header {
   border-radius: 35px;
 }
 #secondStageCreate {
-  display: none;
+  display: block;
 }
 #findgamemain {
+  display: none;
+}
+.nonavailiblity {
+  font-size: 0.8em;
+  text-align: center;
   display: none;
 }
 #firstStageCreate {
@@ -482,6 +489,17 @@ header {
     rgba(255, 255, 255, 1) 100%
   );
 }
+.settingstotaldiv::-webkit-scrollbar {
+  width: 10px;
+}
+.settingstotaldiv::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 255, 0);
+}
+.settingstotaldiv::-webkit-scrollbar-thumb {
+  height: 20%;
+  background-color: white;
+  border-radius: 5px;
+}
 .usersBox2::-webkit-scrollbar {
   width: 10px; /* width of the entire scrollbar */
 }
@@ -651,14 +669,57 @@ header {
   margin: 10px;
   border-radius: 55px;
 }
+#skipavatarbutton {
+  position: absolute;
+  text-decoration: underline;
+  top: 124.5px;
+  left: 435px;
+  height: 90px;
+  width: 102px;
+  margin: 10px;
+  border-radius: 55px;
+  text-align: center;
+  padding-top: 12px;
+  font-size: 0.9em;
+  border: solid 3px white;
+  color: white;
+}
+#saveavatarbutton {
+  position: absolute;
+  text-decoration: underline;
+  height: 90px;
+  width: 102px;
+  top: 254.5px;
+  left: 435px;
+  margin: 10px;
+  border-radius: 55px;
+  text-align: center;
+  padding-top: 12px;
+  font-size: 0.9em;
+  border: solid 3px white;
+  color: white;
+}
+#saveavatarbutton:hover {
+  -webkit-box-shadow: 0px 0px 40px 7px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 0px 0px 40px 7px rgba(0, 0, 0, 0.9);
+  box-shadow: 0px 0px 40px 7px rgba(0, 0, 0, 0.9);
+}
+#skipavatarbutton:hover {
+  -webkit-box-shadow: 0px 0px 40px 7px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 0px 0px 40px 7px rgba(0, 0, 0, 0.9);
+  box-shadow: 0px 0px 40px 7px rgba(0, 0, 0, 0.9);
+}
 .avatarshadow:hover {
   height: 105px;
   width: 105px;
   margin: 10px;
   border-radius: 55px;
-  -webkit-box-shadow: 0px 0px 76px 7px rgba(255, 255, 255, 0.75);
-  -moz-box-shadow: 0px 0px 76px 7px rgba(255, 255, 255, 0.75);
-  box-shadow: 0px 0px 76px 7px rgba(255, 255, 255, 0.75);
+  -webkit-box-shadow: 0px 0px 76px 7px;
+  -moz-box-shadow: 0px 0px 76px 7px;
+  box-shadow: 0px 0px 76px 7px;
+}
+#avatarshadow1 {
+  color: red;
 }
 
 .lizardshadow {

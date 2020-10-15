@@ -349,6 +349,10 @@ $("#CreatUser").on("click", function () {
     createUser = true;
   }
 });
+//add permanentbox shadow!
+// $(this).css('-webkit-box-shadow', '0px 0px 40px 7px red');
+// $(this).css('-moz-box-shadow', '0px 0px 40px 7px red');
+// $(this).css('box-shadow', '0px 0px 40px 7px red');
 
 $("#CreateUserSubmit").on("click", function () {
   event.preventDefault();
