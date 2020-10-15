@@ -17,9 +17,6 @@ let findrachel = users.orderByChild("available").equalTo(true).limitToLast(8);
 findrachel.on("value", function (snapshot) {
   console.log("worked");
   console.log(snapshot.val());
-  let avialableUsers = snapshot.val();
-  let usersKeys = Object.getOwnPropertyNames(avialableUsers);
-  console.log(usersKeys);
 });
 //objects
 var userobject = {
@@ -72,6 +69,24 @@ gameobject = {
 //LOG OUT:
 //userinformation is updated by changing available to false
 
+//search bar logic
+// //setup before functions
+// var typingTimer;                //timer identifier
+// var doneTypingInterval = 5000;  //time in ms (5 seconds)
+
+// //on keyup, start the countdown
+// $('#myInput').keyup(function(){
+//     clearTimeout(typingTimer);
+//     if ($('#myInput').val()) {
+//         typingTimer = setTimeout(doneTyping, doneTypingInterval);
+//     }
+// });
+
+// //user is "finished typing," do something
+// function doneTyping () {
+//     //do something
+// }
+
 const rules = {
   rockpower: ["scissors", "lizard"],
   rockmethod: ["crushes", "crushes"],
@@ -120,6 +135,11 @@ let choiceplayer1;
 let choiceplayer2;
 let clicked = true;
 let locatedUserName;
+let degrees = 360;
+let wait = false;
+let findgame = false;
+let logIn = false;
+let createUser = false;
 //settings button action
 $("#settings").on("click", function () {
   if (settingsclosed === true) {
@@ -214,7 +234,8 @@ for (let index = 0; index < 10; index++) {
 //VIEW AVAILABLE USERS:
 //database is queried for 10 users who are available
 //each user is then displayed in a list next to a request game button
-//updates every 10 secs
+//updates on refresh button
+//and upon User filling in search bar
 function findAvailableUser() {
   let findUsers = users.orderByChild("available").equalTo(true).limitToLast(8);
   findUsers.on("value", function (snapshot) {
@@ -224,7 +245,12 @@ function findAvailableUser() {
     console.log(usersKeys);
   });
 }
-
+function searchForSpecificUser(searchterm) {
+  let findUser = users
+    .orderByChild("A_Name")
+    .equalTo("A_" + searchterm)
+    .limitToLast(8);
+}
 //LOG-IN:
 //User inputs name and submits
 //Database is queried for name
@@ -234,8 +260,15 @@ function findAvailableUser() {
 //userinformation is updated by changing available to true
 //user can now view avialable users and request status
 $("#logIn").on("click", function () {
-  $("#logInMain").css("display", "block");
+  if (logIn === true) {
+    $("#logInMain").css("display", "none");
+    logIn = false;
+  } else {
+    $("#logInMain").css("display", "block");
+    logIn = true;
+  }
 });
+
 $("#submitLogIn").on("click", function () {
   event.preventDefault();
   let currentPinValue = $("#logpinInput").val();
@@ -265,6 +298,27 @@ $("#submitLogIn").on("click", function () {
     }
   }
 });
+$("#findgame").on("click", function () {
+  if (findgame === true) {
+    $("#findgamemain").css("display", "none");
+    findgame = false;
+  } else {
+    $("#findgamemain").css("display", "block");
+    findgame = true;
+  }
+});
+$(".refreshbutton").on("click", function () {
+  if (wait === true) {
+  } else {
+    wait = true;
+    $(".refreshbutton").css("transform", "rotate(" + degrees + "deg)");
+    setTimeout(function () {
+      degrees = degrees + 360;
+      console.log(degrees);
+      wait = false;
+    }, 1000);
+  }
+});
 
 $("#submitLoginName").on("click", function () {
   event.preventDefault();
@@ -287,8 +341,15 @@ $("#submitLoginName").on("click", function () {
 //if name is aviable user is prompted to put in a pin
 //user is updated with pin
 $("#CreatUser").on("click", function () {
-  $("#firstStageCreate").css("display", "block");
+  if (createUser === true) {
+    $("#firstStageCreate").css("display", "none");
+    createUser = false;
+  } else {
+    $("#firstStageCreate").css("display", "block");
+    createUser = true;
+  }
 });
+
 $("#CreateUserSubmit").on("click", function () {
   event.preventDefault();
   let createUserInput = $("#createuser").val();

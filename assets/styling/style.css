@@ -311,7 +311,7 @@ header {
   display: none;
 }
 #findgamemain {
-  display: block;
+  display: none;
 }
 #firstStageCreate {
   display: none;
@@ -352,7 +352,7 @@ header {
   width: 400px;
 }
 .finderusers {
-  margin-top: 20px;
+  margin-top: 30px;
   width: 400px;
   height: 290px;
   border-radius: 30px;
@@ -367,11 +367,41 @@ header {
     rgba(255, 255, 255, 0.5) 100%
   );
 }
-#searchUserbar {
+.acceptRequest {
+  margin-top: 30px;
+  width: 400px;
+  height: 130px;
+  border-radius: 30px;
+  border-color: white;
+  border-style: solid;
+  padding-top: 20px;
+  border-width: 0px 6px 6px 6px;
+  background: rgb(24, 24, 24);
+  background: rgb(24, 24, 24);
+  background: linear-gradient(
+    257deg,
+    rgba(24, 24, 24, 0) 0%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+}
+.searchBarArea {
+  margin: 15px auto;
   width: 380px;
+  height: 46px;
+  display: flex;
+  justify-content: space-between;
+}
+.refreshbutton {
+  margin: auto;
+  height: 35px;
+  width: 35px;
+  transition-duration: 0.5s;
+}
+
+#searchUserbar {
+  width: 310px;
   height: 40px;
   display: block;
-  margin: 15px auto;
   text-align: center;
   background-color: rgb(156, 156, 148, 0);
   border-radius: 20px;
@@ -388,6 +418,22 @@ header {
   border: solid 2px rgb(24, 24, 24);
   margin: 0px auto;
   overflow: hidden;
+}
+.usersBox3 {
+  width: 380px;
+  height: 120px;
+  border-radius: 20px;
+  border: solid 2px rgb(24, 24, 24);
+  margin: 0 auto;
+  overflow: hidden;
+}
+.usersBox4 {
+  width: 370px;
+  height: 100px;
+  /* border-radius: 20px; */
+  margin: 10px auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .usersBox2 {
@@ -410,18 +456,11 @@ header {
   display: flex;
   width: 340px;
   height: 60px;
-  /* font-size: 0.5em; */
   border-radius: 40px 15px 15px 40px;
   border: solid 4px white;
   margin: 5px auto;
   justify-content: space-between;
   background-image: url("https://i.imgur.com/XvCYR7J.jpg");
-  /* background: rgb(24, 24, 24);
-  background: linear-gradient(
-    173deg,
-    rgba(24, 24, 24, 0) 0%,
-    rgba(0, 0, 0, 1) 100%
-  ); */
 }
 .userNameFindGame {
   font-size: 0.6em;
@@ -451,6 +490,19 @@ header {
   background-color: rgba(0, 0, 255, 0);
 }
 .usersBox2::-webkit-scrollbar-thumb {
+  height: 20%;
+  background-color: white; /* color of the scroll thumb */
+  border-radius: 5px; /* roundness of the scroll thumb */
+  /* creates padding around scroll thumb */
+}
+.usersBox4::-webkit-scrollbar {
+  width: 10px; /* width of the entire scrollbar */
+}
+.usersBox4::-webkit-scrollbar-track {
+  /* color of the tracking area */
+  background-color: rgba(0, 0, 255, 0);
+}
+.usersBox4::-webkit-scrollbar-thumb {
   height: 20%;
   background-color: white; /* color of the scroll thumb */
   border-radius: 5px; /* roundness of the scroll thumb */
@@ -609,16 +661,6 @@ header {
   box-shadow: 0px 0px 76px 7px rgba(255, 255, 255, 0.75);
 }
 
-/* .testsquare {
-  background-color: blueviolet;
-  height: 40px;
-  width: 40px;
-  position: absolute;
-  top: 30%;
-  left: 30%;
-  z-index: 30;
-
-} */
 .lizardshadow {
   height: 300px;
   position: absolute;
