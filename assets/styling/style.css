@@ -310,7 +310,7 @@ header {
   border-radius: 35px;
 }
 #secondStageCreate {
-  display: block;
+  display: none;
 }
 #findgamemain {
   display: none;
@@ -703,11 +703,13 @@ header {
   -webkit-box-shadow: 0px 0px 40px 7px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 0px 0px 40px 7px rgba(0, 0, 0, 0.9);
   box-shadow: 0px 0px 40px 7px rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.466);
 }
 #skipavatarbutton:hover {
   -webkit-box-shadow: 0px 0px 40px 7px rgba(0, 0, 0, 0.9);
   -moz-box-shadow: 0px 0px 40px 7px rgba(0, 0, 0, 0.9);
   box-shadow: 0px 0px 40px 7px rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.466);
 }
 .avatarshadow:hover {
   height: 105px;

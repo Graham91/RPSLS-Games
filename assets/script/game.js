@@ -391,7 +391,10 @@ $("#submitCreatePin").on("click", function () {
     users.push(userobject);
     $("#firstStageCreate").css("display", "none");
     $("#secondStageCreate").css("display", "block");
-    $("#welcome").html("Welcome " + createUserInput + "!");
+    $("#logIn").css("display", "none");
+    $("#logout").css("display", "block");
+    $("#CreatUser").css("display", "none");
+    $("#welcomelogin").html("Welcome " + createUserInput + "!");
   }
 });
 //animation for win/lose Game
