@@ -34,7 +34,10 @@ gameobject = {
 };
 //create
 // game.push(gameobject);
-// users.push(userobject);
+// let currentuser = users
+//   .child()
+
+//   .push(userobject);
 //update
 // function writeUserData(userId, name, email, imageUrl) {
 //   firebase
@@ -140,6 +143,7 @@ let wait = false;
 let findgame = false;
 let logIn = false;
 let createUser = false;
+let loggedInName;
 //settings button action
 $("#settings").on("click", function () {
   if (settingsclosed === true) {
@@ -243,14 +247,126 @@ function findAvailableUser() {
     let avialableUsers = snapshot.val();
     let usersKeys = Object.getOwnPropertyNames(avialableUsers);
     console.log(usersKeys);
+    $(".usersBox2").empty();
+    $(".usersBox2").append(
+      "<div class='nonavailiblity'>No One Available</div>"
+    );
+    for (let index = 0; index < usersKeys.length; index++) {
+      const element = usersKeys[index];
+      let individualItem = avialableUsers[element];
+      let name = individualItem.Name;
+      $(".usersBox2").append(
+        "<div class=individualUser id='" +
+          name +
+          "'><img src='https://i.imgur.com/nquo5H4.png' class='avatarchoice3'/><div class=userNameFindGame id='finduser" +
+          index +
+          "'>" +
+          name +
+          "</div><div class=requestbutton>Request Game</div></div>"
+      );
+    }
   });
 }
-function searchForSpecificUser(searchterm) {
-  let findUser = users
-    .orderByChild("A_Name")
-    .equalTo("A_" + searchterm)
-    .limitToLast(8);
+function findrequestedgames() {
+  let findUsersrequests = users.orderByChild("Name").equalTo(loggedInName);
+  findUsersrequests.on("value", function (snapshot) {
+    let avialableUsers = snapshot.val();
+    let avialableUsers2 = avialableUsers[loggedInName].requestRecieved;
+    console.log(avialableUsers2);
+    if (typeof avialableUsers2 === "undefined") {
+      $(".nonavailiblityrequest").css("display", "block");
+    } else {
+      let objectname = Object.getOwnPropertyNames(avialableUsers2);
+
+      console.log();
+      $(".nonavailiblityrequest").css("display", "none");
+      for (let index = 0; index < objectname.length; index++) {
+        const itemname = objectname[index];
+        const name = avialableUsers2[itemname];
+        $(".usersBox4").append(
+          "<div class=individualUser id='" +
+            name +
+            "'><img src='https://i.imgur.com/nquo5H4.png' class='avatarchoice3'/><div class=userNameFindGame id='finduser" +
+            index +
+            "'>" +
+            name +
+            "</div><div class=requestbutton>Accept Game</div></div>"
+        );
+      }
+    }
+  });
 }
+
+findAvailableUser();
+
+$(document).on("click", ".requestbutton", function (event) {
+  console.log("hi");
+  let parentdiv = $(event.target).parent("div");
+  let finddiv = $(parentdiv).attr("id");
+  console.log(finddiv);
+  let newarray;
+  // searchForSpecificUser(finddiv);
+  let findUser = users.orderByChild("A_Name").equalTo("A_" + finddiv);
+  return firebase
+    .database()
+    .ref("/users/" + finddiv)
+    .once("value")
+    .then(function (snapshot) {
+      console.log(snapshot.val());
+      let response = snapshot.val();
+      let oldarray = response.requestRecieved;
+
+      let currentuser = users.child(finddiv);
+      let requestcenter = currentuser.child("requestRecieved");
+
+      firebase
+        .database()
+        .ref("users/" + finddiv + "/requestRecieved")
+        .push(loggedInName);
+      // firebase
+      //   .database()
+      //   .ref("users/" + finddiv)
+      //   .update({
+      //     requestRecieved: {name: newarray},
+      //   });
+    });
+  // findUser
+  //   .on("value", function (snapshot) {
+  //     return snapshot.val();
+  //     // userid = Object.keys(snapshot.val())[0];
+  //     console.log(response);
+  //     // requestrecievedarray =
+  //     //   response[Object.keys(snapshot.val())[0]].requestRecieved;
+  //     // console.log(requestrecievedarray);
+  //     // console.log(requestrecievedarray);
+  //   })
+  //   .then(() => {
+  //     // firebase
+  //     //   .database()
+  //     //   .ref("users/" + finddiv)
+  //     //   .update({
+  //     //     requestRecieved:
+  //     //     ),
+  //     //   });
+  //   });
+  //     var ref = Firestore.instance.document("data_collection/data");
+  // ref.setData({
+  //   "field": FieldValue.arrayUnion(["World"]),
+  // }, merge: true);`
+});
+function searchForSpecificUser(searchterm) {
+  // let findUser = users.orderByChild("A_Name").equalTo("A_" + searchterm);
+  // findUser.on("value", function (snapshot) {
+  //   let response = snapshot.val();
+  //   userid = Object.keys(snapshot.val())[0];
+  //   console.log(userid);
+  //   requestrecievedarray =
+  //   response[Object.keys(snapshot.val())[0]].requestRecieved;
+  //   console.log(requestrecievedarray);
+  //   console.log(requestrecievedarray);
+  // });
+}
+
 //LOG-IN:
 //User inputs name and submits
 //Database is queried for name
@@ -282,6 +398,7 @@ $("#submitLogIn").on("click", function () {
     let objectname = Object.getOwnPropertyNames(locatedUserName);
     let actualPIN = locatedUserName[objectname].PIN;
     let userName = locatedUserName[objectname].Name;
+    loggedInName = userName;
     if (currentPinValue === actualPIN) {
       //logIn success
       $("#welcomelogin").html("Welcome " + userName + "!");
@@ -289,6 +406,7 @@ $("#submitLogIn").on("click", function () {
       $("#logIn").css("display", "none");
       $("#logout").css("display", "block");
       $("#CreatUser").css("display", "none");
+      findrequestedgames();
     } else {
       $("#logpinInput").css("color", "red");
       $("#logininput").val("Bad Pin");
@@ -381,22 +499,29 @@ $("#submitCreatePin").on("click", function () {
       $("#createpinInput").css("color", "black");
     }, 500);
   } else {
-    var userobject = {
-      Name: createUserInput,
-      available: true,
-      PIN: currentPinValue,
-      requestRecieved: {},
-      requestmade: {},
-    };
-    users.push(userobject);
+    // var userobject = {
+
+    // };
+    firebase
+      .database()
+      .ref("users/" + createUserInput)
+      .set({
+        Name: createUserInput,
+        available: true,
+        PIN: currentPinValue,
+        A_Name: "A_" + createUserInput,
+      });
+    // users.push(userobject);
     $("#firstStageCreate").css("display", "none");
     $("#secondStageCreate").css("display", "block");
     $("#logIn").css("display", "none");
     $("#logout").css("display", "block");
     $("#CreatUser").css("display", "none");
     $("#welcomelogin").html("Welcome " + createUserInput + "!");
+    loggedInName = createUserInput;
   }
 });
+
 //animation for win/lose Game
 function beginslotmachinewin(choice1, choice2, method, gamewinlose) {
   setTimeout(function () {

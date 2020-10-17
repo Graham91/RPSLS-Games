@@ -320,6 +320,11 @@ header {
   text-align: center;
   display: none;
 }
+.nonavailiblityrequest {
+  font-size: 0.8em;
+  text-align: center;
+  display: none;
+}
 #firstStageCreate {
   display: none;
 }
