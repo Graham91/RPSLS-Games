@@ -144,6 +144,8 @@ let findgame = false;
 let logIn = false;
 let createUser = false;
 let loggedInName;
+let selectedAvatar = 1;
+let loggedIn = false;
 //settings button action
 $("#settings").on("click", function () {
   if (settingsclosed === true) {
@@ -235,6 +237,23 @@ for (let index = 0; index < 10; index++) {
     }
   });
 }
+function setUpUsersAvatarOnBoard(user, imagenumber) {
+  const imageObjectKey = {
+    1: "https://i.imgur.com/toPiDMv.png",
+    2: "https://i.imgur.com/fMjV0az.png",
+    3: "https://i.imgur.com/nquo5H4.png",
+    4: "https://i.imgur.com/GpKFRuK.png",
+    5: "https://i.imgur.com/qyYSz1v.png",
+    6: "https://i.imgur.com/yNGnXrk.png",
+  };
+  let imageSRC = imageObjectKey[imagenumber];
+  if (user === "you") {
+    $("#leftside").attr("src", imageSRC);
+  } else {
+    $("#rightside").attr("src", imageSRC);
+  }
+}
+
 //VIEW AVAILABLE USERS:
 //database is queried for 10 users who are available
 //each user is then displayed in a list next to a request game button
@@ -290,7 +309,7 @@ function findrequestedgames() {
             index +
             "'>" +
             name +
-            "</div><div class=requestbutton>Accept Game</div></div>"
+            "</div><div class=Acceptbutton>Accept Game</div></div>"
         );
       }
     }
@@ -304,31 +323,19 @@ $(document).on("click", ".requestbutton", function (event) {
   let parentdiv = $(event.target).parent("div");
   let finddiv = $(parentdiv).attr("id");
   console.log(finddiv);
-  let newarray;
   // searchForSpecificUser(finddiv);
-  let findUser = users.orderByChild("A_Name").equalTo("A_" + finddiv);
+
   return firebase
     .database()
     .ref("/users/" + finddiv)
     .once("value")
     .then(function (snapshot) {
+      //if avialable allow push
       console.log(snapshot.val());
-      let response = snapshot.val();
-      let oldarray = response.requestRecieved;
-
-      let currentuser = users.child(finddiv);
-      let requestcenter = currentuser.child("requestRecieved");
-
       firebase
         .database()
         .ref("users/" + finddiv + "/requestRecieved")
         .push(loggedInName);
-      // firebase
-      //   .database()
-      //   .ref("users/" + finddiv)
-      //   .update({
-      //     requestRecieved: {name: newarray},
-      //   });
     });
   // findUser
   //   .on("value", function (snapshot) {
@@ -398,14 +405,19 @@ $("#submitLogIn").on("click", function () {
     let objectname = Object.getOwnPropertyNames(locatedUserName);
     let actualPIN = locatedUserName[objectname].PIN;
     let userName = locatedUserName[objectname].Name;
+    let userimage = locatedUserName[objectname].avatarimage;
     loggedInName = userName;
     if (currentPinValue === actualPIN) {
+      loggedIn = true;
       //logIn success
       $("#welcomelogin").html("Welcome " + userName + "!");
+      $("#playerNameYou").html(userName);
       $("#logInMain").css("display", "none");
       $("#logIn").css("display", "none");
       $("#logout").css("display", "block");
       $("#CreatUser").css("display", "none");
+      $("#logInfirst").css("display", "none");
+      setUpUsersAvatarOnBoard("you", userimage);
       findrequestedgames();
     } else {
       $("#logpinInput").css("color", "red");
@@ -418,10 +430,20 @@ $("#submitLogIn").on("click", function () {
 });
 $("#findgame").on("click", function () {
   if (findgame === true) {
-    $("#findgamemain").css("display", "none");
+    if (loggedIn === true) {
+      $("#findgamemain").css("display", "none");
+      $("#logInfirst").css("display", "none");
+    } else {
+      $("#findgamemain").css("display", "none");
+      $("#logInfirst").css("display", "none");
+    }
     findgame = false;
   } else {
-    $("#findgamemain").css("display", "block");
+    if (loggedIn === true) {
+      $("#findgamemain").css("display", "block");
+    } else {
+      $("#logInfirst").css("display", "block");
+    }
     findgame = true;
   }
 });
@@ -437,7 +459,14 @@ $(".refreshbutton").on("click", function () {
     }, 1000);
   }
 });
-
+$(".avatarshadow").on("click", function () {
+  let targetdiv = "#" + event.target.id;
+  let numberofImage = targetdiv.slice(-1);
+  selectedAvatar = parseInt(numberofImage);
+  $(".avatarshadow").removeClass("redshadow");
+  $(targetdiv).addClass("redshadow");
+  console.log(selectedAvatar);
+});
 $("#submitLoginName").on("click", function () {
   event.preventDefault();
   let LoginUserInput = $("#logininput").val();
@@ -471,7 +500,21 @@ $("#CreatUser").on("click", function () {
 // $(this).css('-webkit-box-shadow', '0px 0px 40px 7px red');
 // $(this).css('-moz-box-shadow', '0px 0px 40px 7px red');
 // $(this).css('box-shadow', '0px 0px 40px 7px red');
-
+$("#skipavatarbutton").on("click", function () {
+  $("#secondStageCreate").css("display", "none");
+  $("#findgame").css("display", "block");
+});
+$("#saveavatarbutton").on("click", function () {
+  firebase
+    .database()
+    .ref("users/" + loggedInName)
+    .update({
+      avatarimage: selectedAvatar,
+    });
+  $("#secondStageCreate").css("display", "none");
+  setUpUsersAvatarOnBoard("you", selectedAvatar);
+  $("#findgame").css("display", "block");
+});
 $("#CreateUserSubmit").on("click", function () {
   event.preventDefault();
   let createUserInput = $("#createuser").val();
@@ -506,19 +549,25 @@ $("#submitCreatePin").on("click", function () {
       .database()
       .ref("users/" + createUserInput)
       .set({
+        avatarimage: 1,
         Name: createUserInput,
         available: true,
         PIN: currentPinValue,
         A_Name: "A_" + createUserInput,
       });
     // users.push(userobject);
+    loggedIn = true;
     $("#firstStageCreate").css("display", "none");
     $("#secondStageCreate").css("display", "block");
+    $("#findgame").css("display", "none");
     $("#logIn").css("display", "none");
     $("#logout").css("display", "block");
     $("#CreatUser").css("display", "none");
+    $("#logInfirst").css("display", "none");
     $("#welcomelogin").html("Welcome " + createUserInput + "!");
+    $("#playerNameYou").html(createUserInput);
     loggedInName = createUserInput;
+    findrequestedgames();
   }
 });
 
