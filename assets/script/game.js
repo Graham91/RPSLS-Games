@@ -154,6 +154,7 @@ let createUser = false;
 let loggedInName;
 let selectedAvatar = 1;
 let loggedIn = false;
+let connectedGameInPlay = false;
 //settings button action
 $("#settings").on("click", function () {
   if (settingsclosed === true) {
@@ -351,17 +352,23 @@ $(document).on("click", ".Acceptbutton", function (event) {
     .once("value")
     .then(function (snapshot) {
       //if avialable allow push
+
       let available = snapshot.val().available;
       if (available === true) {
+        $(findDivID).css("border-color", "green");
+        $(findDivID).children(".userNameFindGame").html("Accepted");
+        setTimeout(function () {
+          $(findDivID).remove();
+        }, 1500);
         //make a game with the name of the accepter
         firebase
           .database()
           .ref("game/" + loggedInName)
           .set({
             player1: loggedInName,
-            player1Choice: null,
+            player1Choice: "waiting",
             player2: finddiv,
-            player2Choice: null,
+            player2Choice: "waiting",
           });
         //find the requester and update them to inGame
         firebase
@@ -480,19 +487,24 @@ function setUpupdateconnectionOnLogin(login) {
             oponent;
             let game = firebase.database().ref("game/" + loggedInName);
             game.on("value", function (snapshot) {
-              //gameplay here
+              //game is now in play
+              $("#oponent").html(oponent);
+              connectedGameInPlay = true;
               console.log(snapshot.val());
             });
           } else {
             let game = firebase.database().ref("game/" + oponent);
             game.on("value", function (snapshot) {
-              //gameplay here
+              //game is now in play
+              $("#oponent").html(oponent);
+              connectedGameInPlay = true;
               console.log(snapshot.val());
             });
           }
         });
     } else {
       console.log("not playing a game");
+      connectedGameInPlay = false;
     }
 
     //if equals true run search
