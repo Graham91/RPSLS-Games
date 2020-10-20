@@ -246,6 +246,7 @@ for (let index = 0; index < 10; index++) {
     }
   });
 }
+
 function setUpUsersAvatarOnBoard(user, imagenumber) {
   let imageSRC = imageObjectKey[imagenumber];
   if (user === "you") {
@@ -296,6 +297,10 @@ function findAvailableUser() {
       let name = individualItem.Name;
       let picture = individualItem.avatarimage;
       if (name === loggedInName) {
+        console.log(usersKeys.length);
+        if (usersKeys.length === 1) {
+          $(".nonavailiblity").css("display", "block");
+        }
       } else {
         $(".usersBox2").append(
           "<div class=individualUser id='" +
@@ -312,6 +317,7 @@ function findAvailableUser() {
     }
   });
 }
+//search your data for requested Games
 function findrequestedgames() {
   let findUsersrequests = users.orderByChild("Name").equalTo(loggedInName);
   findUsersrequests.on("value", function (snapshot) {
@@ -340,7 +346,21 @@ function findrequestedgames() {
     }
   });
 }
-
+//refresh avaible Users display
+$(".refreshbutton").on("click", function () {
+  if (wait === true) {
+  } else {
+    wait = true;
+    $(".refreshbutton").css("transform", "rotate(" + degrees + "deg)");
+    setTimeout(function () {
+      degrees = degrees + 360;
+      console.log(degrees);
+      findAvailableUser();
+      wait = false;
+    }, 1000);
+  }
+});
+//accept a game request
 $(document).on("click", ".Acceptbutton", function (event) {
   let parentdiv = $(event.target).parent("div");
   let finddiv = $(parentdiv).attr("id");
@@ -403,7 +423,7 @@ $(document).on("click", ".Acceptbutton", function (event) {
       //once ingame is active then sets up game to work with display
     });
 });
-
+//request a game from another user
 $(document).on("click", ".requestbutton", function (event) {
   console.log("hi");
   let parentdiv = $(event.target).parent("div");
@@ -529,16 +549,24 @@ function setUpupdateconnectionOnLogin(login) {
 //if pin matches the User is told they are logged in
 //userinformation is updated by changing available to true
 //user can now view avialable users and request status
-$("#logIn").on("click", function () {
-  if (logIn === true) {
-    $("#logInMain").css("display", "none");
-    logIn = false;
-  } else {
-    $("#logInMain").css("display", "block");
-    logIn = true;
-  }
-});
 
+//checks name against data base to make sure you can't have duplicates
+//opens pin box
+$("#submitLoginName").on("click", function () {
+  event.preventDefault();
+  let LoginUserInput = $("#logininput").val();
+  let checkifuserexists = users.orderByChild("Name").equalTo(LoginUserInput);
+  checkifuserexists.on("value", function (snapshot) {
+    if (snapshot.val() === null) {
+      $("#logininput").val("Username Not Found");
+    } else {
+      locatedUserName = snapshot.val();
+      $("#LoginPIN").css("display", "block");
+      $("#submitLoginName").css("display", "none");
+    }
+  });
+});
+//logIn after Pin is entered
 $("#submitLogIn").on("click", function () {
   event.preventDefault();
   let currentPinValue = $("#logpinInput").val();
@@ -577,7 +605,8 @@ $("#submitLogIn").on("click", function () {
     }
   }
 });
-
+//MENU OPTIONS:
+//open and closing Find a Game
 $("#findgame").on("click", function () {
   if (findgame === true) {
     if (loggedIn === true) {
@@ -597,47 +626,17 @@ $("#findgame").on("click", function () {
     findgame = true;
   }
 });
-$(".refreshbutton").on("click", function () {
-  if (wait === true) {
+//open and closing Login
+$("#logIn").on("click", function () {
+  if (logIn === true) {
+    $("#logInMain").css("display", "none");
+    logIn = false;
   } else {
-    wait = true;
-    $(".refreshbutton").css("transform", "rotate(" + degrees + "deg)");
-    setTimeout(function () {
-      degrees = degrees + 360;
-      console.log(degrees);
-      findAvailableUser();
-      wait = false;
-    }, 1000);
+    $("#logInMain").css("display", "block");
+    logIn = true;
   }
 });
-$(".avatarshadow").on("click", function () {
-  let targetdiv = "#" + event.target.id;
-  let numberofImage = targetdiv.slice(-1);
-  selectedAvatar = parseInt(numberofImage);
-  $(".avatarshadow").removeClass("redshadow");
-  $(targetdiv).addClass("redshadow");
-  console.log(selectedAvatar);
-});
-$("#submitLoginName").on("click", function () {
-  event.preventDefault();
-  let LoginUserInput = $("#logininput").val();
-  let checkifuserexists = users.orderByChild("Name").equalTo(LoginUserInput);
-  checkifuserexists.on("value", function (snapshot) {
-    if (snapshot.val() === null) {
-      $("#logininput").val("Username Not Found");
-    } else {
-      locatedUserName = snapshot.val();
-      $("#LoginPIN").css("display", "block");
-      $("#submitLoginName").css("display", "none");
-    }
-  });
-});
-//CREATE USER:
-//User inputs name and submits
-//database is queried for name
-//if name exist user is told name is unavialable
-//if name is aviable user is prompted to put in a pin
-//user is updated with pin
+//open and closing Create User
 $("#CreatUser").on("click", function () {
   if (createUser === true) {
     $("#firstStageCreate").css("display", "none");
@@ -647,14 +646,23 @@ $("#CreatUser").on("click", function () {
     createUser = true;
   }
 });
-//add permanentbox shadow!
-// $(this).css('-webkit-box-shadow', '0px 0px 40px 7px red');
-// $(this).css('-moz-box-shadow', '0px 0px 40px 7px red');
-// $(this).css('box-shadow', '0px 0px 40px 7px red');
+
+//AVATAR STUFF:
+//turns chosen avatar red updates selected avatar
+$(".avatarshadow").on("click", function () {
+  let targetdiv = "#" + event.target.id;
+  let numberofImage = targetdiv.slice(-1);
+  selectedAvatar = parseInt(numberofImage);
+  $(".avatarshadow").removeClass("redshadow");
+  $(targetdiv).addClass("redshadow");
+  console.log(selectedAvatar);
+});
+//skip choosing avatar
 $("#skipavatarbutton").on("click", function () {
   $("#secondStageCreate").css("display", "none");
   $("#findgame").css("display", "block");
 });
+//save avatar preference to data base
 $("#saveavatarbutton").on("click", function () {
   firebase
     .database()
@@ -666,6 +674,13 @@ $("#saveavatarbutton").on("click", function () {
   setUpUsersAvatarOnBoard("you", selectedAvatar);
   $("#findgame").css("display", "block");
 });
+//CREATE USER:
+//User inputs name and submits
+//database is queried for name
+//if name exist user is told name is unavialable
+//if name is aviable user is prompted to put in a pin
+//user is updated with pin
+
 $("#CreateUserSubmit").on("click", function () {
   event.preventDefault();
   let createUserInput = $("#createuser").val();
