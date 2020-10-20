@@ -13,11 +13,11 @@ var ref = database.ref();
 let users = ref.child("users");
 let game = ref.child("game");
 //find
-let findrachel = users.orderByChild("available").equalTo(true).limitToLast(8);
-findrachel.on("value", function (snapshot) {
-  console.log("worked");
-  console.log(snapshot.val());
-});
+// let findrachel = users.orderByChild("available").equalTo(true).limitToLast(8);
+// findrachel.on("value", function (snapshot) {
+//   console.log("worked");
+//   console.log(snapshot.val());
+// });
 //objects
 var userobject = {
   Name: "Yraham",
@@ -31,6 +31,14 @@ gameobject = {
   player2ID: "Graham",
   player1choice: "null",
   player2choice: "null",
+};
+const imageObjectKey = {
+  1: "https://i.imgur.com/toPiDMv.png",
+  2: "https://i.imgur.com/fMjV0az.png",
+  3: "https://i.imgur.com/nquo5H4.png",
+  4: "https://i.imgur.com/GpKFRuK.png",
+  5: "https://i.imgur.com/qyYSz1v.png",
+  6: "https://i.imgur.com/yNGnXrk.png",
 };
 //create
 // game.push(gameobject);
@@ -238,14 +246,6 @@ for (let index = 0; index < 10; index++) {
   });
 }
 function setUpUsersAvatarOnBoard(user, imagenumber) {
-  const imageObjectKey = {
-    1: "https://i.imgur.com/toPiDMv.png",
-    2: "https://i.imgur.com/fMjV0az.png",
-    3: "https://i.imgur.com/nquo5H4.png",
-    4: "https://i.imgur.com/GpKFRuK.png",
-    5: "https://i.imgur.com/qyYSz1v.png",
-    6: "https://i.imgur.com/yNGnXrk.png",
-  };
   let imageSRC = imageObjectKey[imagenumber];
   if (user === "you") {
     $("#leftside").attr("src", imageSRC);
@@ -260,8 +260,27 @@ function setUpUsersAvatarOnBoard(user, imagenumber) {
 //updates on refresh button
 //and upon User filling in search bar
 function findAvailableUser() {
+  //   var userId = firebase.auth().currentUser.uid;
+  // return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+  //   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+
+  // });
+  // return firebase
+  //   .database()
+  //   .ref("/users")
+  //   .orderByChild("available")
+  //   .equalTo(true)
+  //   .once("value")
+  //   .then((snapshot) => {
+  //     snapshot.forEach((child) => {
+  //       const post = child.val();
+  //       post.id = child.key;
+
+  //       console.log(post.id);
+  //     });
+  //   });
   let findUsers = users.orderByChild("available").equalTo(true).limitToLast(8);
-  findUsers.on("value", function (snapshot) {
+  findUsers.once("value", function (snapshot) {
     console.log("worked");
     let avialableUsers = snapshot.val();
     let usersKeys = Object.getOwnPropertyNames(avialableUsers);
@@ -274,15 +293,21 @@ function findAvailableUser() {
       const element = usersKeys[index];
       let individualItem = avialableUsers[element];
       let name = individualItem.Name;
-      $(".usersBox2").append(
-        "<div class=individualUser id='" +
-          name +
-          "'><img src='https://i.imgur.com/nquo5H4.png' class='avatarchoice3'/><div class=userNameFindGame id='finduser" +
-          index +
-          "'>" +
-          name +
-          "</div><div class=requestbutton>Request Game</div></div>"
-      );
+      let picture = individualItem.avatarimage;
+      if (name === loggedInName) {
+      } else {
+        $(".usersBox2").append(
+          "<div class=individualUser id='" +
+            name +
+            "'><img src='" +
+            imageObjectKey[picture] +
+            "' class='avatarchoice3'/><div class=userNameFindGame id='finduser" +
+            index +
+            "'>" +
+            name +
+            "</div><div class=requestbutton>Request Game</div></div>"
+        );
+      }
     }
   });
 }
@@ -296,7 +321,6 @@ function findrequestedgames() {
       $(".nonavailiblityrequest").css("display", "block");
     } else {
       let objectname = Object.getOwnPropertyNames(avialableUsers2);
-
       console.log();
       $(".nonavailiblityrequest").css("display", "none");
       for (let index = 0; index < objectname.length; index++) {
@@ -316,12 +340,68 @@ function findrequestedgames() {
   });
 }
 
-findAvailableUser();
+$(document).on("click", ".Acceptbutton", function (event) {
+  let parentdiv = $(event.target).parent("div");
+  let finddiv = $(parentdiv).attr("id");
+  let findDivID = "#" + finddiv;
+  //make sure user is avialble
+  return firebase
+    .database()
+    .ref("/users/" + finddiv)
+    .once("value")
+    .then(function (snapshot) {
+      //if avialable allow push
+      let available = snapshot.val().available;
+      if (available === true) {
+        //make a game with the name of the accepter
+        firebase
+          .database()
+          .ref("game/" + loggedInName)
+          .set({
+            player1: loggedInName,
+            player1Choice: null,
+            player2: finddiv,
+            player2Choice: null,
+          });
+        //find the requester and update them to inGame
+        firebase
+          .database()
+          .ref("users/" + finddiv)
+          .update({
+            inGame: true,
+            requestRecieved: {},
+            available: false,
+            playing: loggedInName,
+            owner: false,
+          });
+        firebase
+          .database()
+          .ref("users/" + loggedInName)
+          .update({
+            inGame: true,
+            requestRecieved: {},
+            available: false,
+            playing: finddiv,
+            owner: true,
+          });
+      } else {
+        $(findDivID).css("border-color", "red");
+        $(findDivID).children(".userNameFindGame").html("unavailable");
+        setTimeout(function () {
+          $(findDivID).remove();
+        }, 1500);
+      }
+      //inGame if inGame search for name in games
+
+      //once ingame is active then sets up game to work with display
+    });
+});
 
 $(document).on("click", ".requestbutton", function (event) {
   console.log("hi");
   let parentdiv = $(event.target).parent("div");
   let finddiv = $(parentdiv).attr("id");
+  let findDivID = "#" + finddiv;
   console.log(finddiv);
   // searchForSpecificUser(finddiv);
 
@@ -331,11 +411,20 @@ $(document).on("click", ".requestbutton", function (event) {
     .once("value")
     .then(function (snapshot) {
       //if avialable allow push
-      console.log(snapshot.val());
-      firebase
-        .database()
-        .ref("users/" + finddiv + "/requestRecieved")
-        .push(loggedInName);
+      let available = snapshot.val().available;
+      if (available === true) {
+        console.log(snapshot.val());
+        firebase
+          .database()
+          .ref("users/" + finddiv + "/requestRecieved")
+          .push(loggedInName);
+      } else {
+        $(findDivID).css("border-color", "red");
+        $(findDivID).children(".userNameFindGame").html("unavailable");
+        setTimeout(function () {
+          $(findDivID).remove();
+        }, 1500);
+      }
     });
   // findUser
   //   .on("value", function (snapshot) {
@@ -372,6 +461,52 @@ function searchForSpecificUser(searchterm) {
   //   console.log(requestrecievedarray);
   //   console.log(requestrecievedarray);
   // });
+}
+function setUpupdateconnectionOnLogin(login) {
+  var inGameChecker = firebase.database().ref("users/" + login + "/inGame");
+  inGameChecker.on("value", function (snapshot) {
+    console.log(snapshot.val());
+    let inGame = snapshot.val();
+    if (inGame === true) {
+      return firebase
+        .database()
+        .ref("/users/" + loggedInName)
+        .once("value")
+        .then(function (snapshot) {
+          let oponent = snapshot.val().playing;
+          console.log(oponent);
+          let owner = snapshot.val().owner;
+          if (owner === true) {
+            oponent;
+            let game = firebase.database().ref("game/" + loggedInName);
+            game.on("value", function (snapshot) {
+              //gameplay here
+              console.log(snapshot.val());
+            });
+          } else {
+            let game = firebase.database().ref("game/" + oponent);
+            game.on("value", function (snapshot) {
+              //gameplay here
+              console.log(snapshot.val());
+            });
+          }
+        });
+    } else {
+      console.log("not playing a game");
+    }
+
+    //if equals true run search
+    //set up with values
+
+    //if equals false
+    // firebase
+    //   .database()
+    //   .ref("games/" + gamevalue)
+    //   .on("value", function (snapshot) {});
+
+    //run with default game
+    //default game never changes
+  });
 }
 
 //LOG-IN:
@@ -417,8 +552,10 @@ $("#submitLogIn").on("click", function () {
       $("#logout").css("display", "block");
       $("#CreatUser").css("display", "none");
       $("#logInfirst").css("display", "none");
+      findAvailableUser();
       setUpUsersAvatarOnBoard("you", userimage);
       findrequestedgames();
+      setUpupdateconnectionOnLogin(userName);
     } else {
       $("#logpinInput").css("color", "red");
       $("#logininput").val("Bad Pin");
@@ -428,6 +565,7 @@ $("#submitLogIn").on("click", function () {
     }
   }
 });
+
 $("#findgame").on("click", function () {
   if (findgame === true) {
     if (loggedIn === true) {
@@ -455,6 +593,7 @@ $(".refreshbutton").on("click", function () {
     setTimeout(function () {
       degrees = degrees + 360;
       console.log(degrees);
+      findAvailableUser();
       wait = false;
     }, 1000);
   }
@@ -554,6 +693,7 @@ $("#submitCreatePin").on("click", function () {
         available: true,
         PIN: currentPinValue,
         A_Name: "A_" + createUserInput,
+        inGame: false,
       });
     // users.push(userobject);
     loggedIn = true;
@@ -567,7 +707,9 @@ $("#submitCreatePin").on("click", function () {
     $("#welcomelogin").html("Welcome " + createUserInput + "!");
     $("#playerNameYou").html(createUserInput);
     loggedInName = createUserInput;
+    findAvailableUser();
     findrequestedgames();
+    setUpupdateconnectionOnLogin(createUserInput);
   }
 });
 
