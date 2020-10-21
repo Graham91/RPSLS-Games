@@ -34,13 +34,93 @@ header {
   height: 100px;
   width: 100px;
 }
+.panel {
+  height: 140px;
+  width: 140px;
+  margin: 6px 13px;
+  border: inset 5px rgb(202, 202, 190);
+  background-color: black;
+  position: relative;
+  font-size: 0.8em;
+  -webkit-perspective: 600px;
+  -moz-perspective: 600px;
+  transition: left 2s;
+}
+
+/* -- make sure to declare a default for every property that you want animated -- */
+/* -- general styles, including Y axis rotation -- */
+.panel .front {
+  position: absolute;
+  top: 0;
+  z-index: 900;
+  width: inherit;
+  height: inherit;
+  text-align: center;
+  -webkit-transform: rotateX(0deg) rotateY(0deg);
+  -webkit-transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  -moz-transform: rotateX(0deg) rotateY(0deg);
+  -moz-transform-style: preserve-3d;
+  -moz-backface-visibility: hidden;
+  /* -- transition is the magic sauce for animation -- */
+  -o-transition: all 1s linear;
+  -ms-transition: all 1s linear;
+  -moz-transition: all 1s linear;
+  -webkit-transition: all 1s linear;
+  transition: all 1s linear;
+}
+
+.panel.flip .front {
+  z-index: 900;
+  -webkit-transform: rotatex(180deg);
+  -moz-transform: rotatex(180deg);
+}
+
+.panel .back {
+  position: absolute;
+  top: 0;
+  z-index: 800;
+  width: inherit;
+  height: inherit;
+  -webkit-transform: rotateX(-180deg);
+  -webkit-transform: rotateX(-180deg);
+  -webkit-transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  -moz-transform: rotateX(-180deg);
+  -moz-transform-style: preserve-3d;
+  -moz-backface-visibility: hidden;
+  /* -- transition is the magic sauce for animation -- */
+  -o-transition: all 1s linear;
+  -ms-transition: all 1s linear;
+  -moz-transition: all 1s linear;
+  -webkit-transition: all 1s linear;
+  transition: all 1s linear;
+}
+
+.panel.flip .back {
+  z-index: 1000;
+  -webkit-transform: rotateX(0deg) rotateY(0deg);
+  -moz-transform: rotateX(0deg) rotateY(0deg);
+}
+
+.pad {
+  background-color: green;
+  width: 140px;
+  height: 140px;
+}
+
+.pad1 {
+  background-color: blue;
+  width: 140px;
+  height: 140px;
+}
+
+.verticleCenter {
+  padding-top: 15px;
+}
 .image2 {
   height: 140px;
   width: 140px;
-  margin: 6px 15px;
-  border-style: inset;
-  border-width: 5px;
-  border-color: rgb(202, 202, 190);
 }
 #explaination {
   font-size: 25px;
@@ -192,6 +272,11 @@ header {
   grid-column-start: 2;
   grid-column-end: span 2;
   grid-row-start: 1;
+}
+#explaination {
+  overflow-x: hidden;
+  transition-duration: 1.4s;
+  max-width: 100px;
 }
 .numberbutton {
   width: 50px;

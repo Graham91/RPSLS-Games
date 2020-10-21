@@ -829,8 +829,11 @@ function beginslotmachinewin(choice1, choice2, method, gamewinlose) {
           { width: "15px", height: "15px", top: "110px", right: "95px" },
           1000
         );
+        $(".panel").removeClass("flip");
+        getcomputerchoice();
         setTimeout(function () {
           clicked = true;
+          $("#explaination").css("max-width", "0");
         }, 1000);
       }, 700);
     }, 4400);
@@ -852,7 +855,12 @@ $(".dropdownbutton").mousedown(function () {
   );
   $(".dropdownbutton").css("border-style", "inset");
 });
-
+$("#button").on("click", function () {
+  $(".panel").removeClass("flip");
+});
+$("#button2").on("click", function () {
+  $(".panel").addClass("flip");
+});
 // This function will detmine if you won or not as well as call
 // all necesary user interface adjusting functions
 function comparetworesults() {
@@ -860,9 +868,15 @@ function comparetworesults() {
   $("#youchoice").html(
     "<img src='./assets/images/" + personchoice + ".png' class='image2'>"
   );
+
   $("#computerchoice").html(
     "<img src='./assets/images/" + computerchoice + ".png' class='image2'>"
   );
+  setTimeout(function () {
+    $(".panel").addClass("flip");
+  }, 1000);
+  $("#explaination").empty();
+  $("#explaination").css("max-width", "100px");
   if (personchoice === computerchoice) {
     console.log("tie");
     outcome = "lose";
@@ -870,8 +884,13 @@ function comparetworesults() {
     setTimeout(function () {
       $("#totalgame").removeClass("tie");
     }, 2000);
-    clicked = true;
+    getcomputerchoice();
+    $("#explaination").css("max-width", "0px");
     $("#explaination").empty();
+    setTimeout(function () {
+      $(".panel").removeClass("flip");
+      clicked = true;
+    }, 3000);
   } else {
     determinetext(personchoice, computerchoice);
 
@@ -886,7 +905,6 @@ function comparetworesults() {
       theirnumberwin = parseInt($("#theirwinnumber").html());
       $("#yourlossnumber").html(yournumberloss + 1);
       $("#theirwinnumber").html(theirnumberwin + 1);
-
       determinetext(computerchoice, personchoice);
       beginslotmachinewin(
         slotMechanismLocation[choiceplayer1],
