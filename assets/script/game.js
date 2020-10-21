@@ -223,6 +223,7 @@ for (let i = 0; i < 5; i++) {
   $(idgrabber).on("click", function () {
     if (clicked === true) {
       clicked = false;
+      $("#yourchoicestatus").html("STATUS: chosen");
       personchoice = aviablechoices[i];
       console.log(personchoice);
       comparetworesults();
@@ -830,8 +831,10 @@ function beginslotmachinewin(choice1, choice2, method, gamewinlose) {
           1000
         );
         $(".panel").removeClass("flip");
-        getcomputerchoice();
+        $("#yourchoicestatus").html("STATUS: pending..");
+        $("#computerchoicestatus").html("STATUS: pending..");
         setTimeout(function () {
+          getcomputerchoice();
           clicked = true;
           $("#explaination").css("max-width", "0");
         }, 1000);
@@ -845,6 +848,7 @@ function getcomputerchoice() {
   let computerchoicenumber = Math.floor(Math.random() * Math.floor(5));
   computerchoice = aviablechoices[computerchoicenumber];
   console.log(computerchoice);
+  $("#computerchoicestatus").html("STATUS: chosen");
 }
 getcomputerchoice();
 
@@ -883,13 +887,17 @@ function comparetworesults() {
     $("#totalgame").addClass("tie");
     setTimeout(function () {
       $("#totalgame").removeClass("tie");
+      $("#computerchoicestatus").html("STATUS: pending..");
     }, 2000);
-    getcomputerchoice();
     $("#explaination").css("max-width", "0px");
     $("#explaination").empty();
     setTimeout(function () {
+      $("#yourchoicestatus").html("STATUS: pending..");
       $(".panel").removeClass("flip");
-      clicked = true;
+      setTimeout(function () {
+        getcomputerchoice();
+        clicked = true;
+      }, 1000);
     }, 3000);
   } else {
     determinetext(personchoice, computerchoice);

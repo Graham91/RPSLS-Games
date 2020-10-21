@@ -110,13 +110,17 @@ header {
 }
 
 .pad1 {
-  background-color: blue;
+  background-color: rgb(78, 78, 78);
   width: 140px;
   height: 140px;
+  font-size: 2em;
 }
-
 .verticleCenter {
-  padding-top: 15px;
+  padding-top: 20px;
+}
+.status {
+  padding-top: 10px;
+  font-size: 0.8em;
 }
 .image2 {
   height: 140px;
