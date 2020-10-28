@@ -26,6 +26,7 @@ var userobject = {
   requestRecieved: {},
   requestmade: {},
 };
+
 gameobject = {
   player1ID: "Yraham",
   player2ID: "Graham",
@@ -155,6 +156,15 @@ let loggedInName;
 let selectedAvatar = 1;
 let loggedIn = false;
 let connectedGameInPlay = false;
+let gamename = "graham9";
+// player class
+class PLayer {
+  constructor(choice, name) {
+    this.name = name;
+    this.choice = choice;
+  }
+}
+
 //settings button action
 $("#settings").on("click", function () {
   if (settingsclosed === true) {
@@ -186,50 +196,73 @@ $("#settings").on("click", function () {
   console.log("button worked");
 });
 // this sets all the buttons up to run the program
-for (let i = 0; i < 5; i++) {
-  let idgrabber = "#" + aviablechoices[i];
-  let locatorstring1 = idgrabber + " .shadow5";
-  let locatorstring2 = idgrabber + " .shadow4";
-  let locatorstring3 = idgrabber + " .shadow";
-  let locatorstring4 = idgrabber + " .shadow1";
-  let locatorstring5 = idgrabber + " .shadow2";
-  let locatorstring6 = idgrabber + " .shadow3";
-  let locatorstring7 = idgrabber + " .shadow6";
-  let locatorstring8 = idgrabber + " .shadow7";
-  $(idgrabber).mouseup(function () {
-    if (clicked === true) {
-      $(locatorstring1).css("display", "none");
-      $(locatorstring2).css("display", "none");
-      $(locatorstring7).css("display", "none");
-      $(locatorstring3).css("display", "block");
-      $(locatorstring4).css("display", "block");
-      $(locatorstring5).css("display", "block");
-      $(locatorstring6).css("display", "block");
-      $(locatorstring8).css("display", "block");
-    }
-  });
-  $(idgrabber).mousedown(function () {
-    if (clicked === true) {
-      $(locatorstring1).css("display", "block");
-      $(locatorstring2).css("display", "block");
-      $(locatorstring7).css("display", "block");
-      $(locatorstring3).css("display", "none");
-      $(locatorstring4).css("display", "none");
-      $(locatorstring5).css("display", "none");
-      $(locatorstring6).css("display", "none");
-      $(locatorstring8).css("display", "none");
-    }
-  });
-  $(idgrabber).on("click", function () {
-    if (clicked === true) {
-      clicked = false;
-      $("#yourchoicestatus").html("STATUS: chosen");
-      personchoice = aviablechoices[i];
-      console.log(personchoice);
-      comparetworesults();
-    }
-  });
+function setupbuttons() {
+  for (let i = 0; i < 5; i++) {
+    let idgrabber = "#" + aviablechoices[i];
+    let locatorstring1 = idgrabber + " .shadow5";
+    let locatorstring2 = idgrabber + " .shadow4";
+    let locatorstring3 = idgrabber + " .shadow";
+    let locatorstring4 = idgrabber + " .shadow1";
+    let locatorstring5 = idgrabber + " .shadow2";
+    let locatorstring6 = idgrabber + " .shadow3";
+    let locatorstring7 = idgrabber + " .shadow6";
+    let locatorstring8 = idgrabber + " .shadow7";
+    $(idgrabber).mouseup(function () {
+      if (clicked === true) {
+        $(locatorstring1).css("display", "none");
+        $(locatorstring2).css("display", "none");
+        $(locatorstring7).css("display", "none");
+        $(locatorstring3).css("display", "block");
+        $(locatorstring4).css("display", "block");
+        $(locatorstring5).css("display", "block");
+        $(locatorstring6).css("display", "block");
+        $(locatorstring8).css("display", "block");
+      }
+    });
+    $(idgrabber).mousedown(function () {
+      if (clicked === true) {
+        $(locatorstring1).css("display", "block");
+        $(locatorstring2).css("display", "block");
+        $(locatorstring7).css("display", "block");
+        $(locatorstring3).css("display", "none");
+        $(locatorstring4).css("display", "none");
+        $(locatorstring5).css("display", "none");
+        $(locatorstring6).css("display", "none");
+        $(locatorstring8).css("display", "none");
+      }
+    });
+    $(idgrabber).on("click", function () {
+      if (clicked === true) {
+        clicked = false;
+        $("#yourchoicestatus").html("STATUS: chosen");
+        personchoice = aviablechoices[i];
+        console.log("this is the gamename" + gamename);
+        if (connectedGameInPlay === true) {
+          if (gamename === loggedInName) {
+            firebase
+              .database()
+              .ref("game/" + gamename)
+              .update({
+                player1Choice: personchoice,
+              });
+          } else {
+            console.log(gamename);
+            firebase
+              .database()
+              .ref("game/" + gamename)
+              .update({
+                player2Choice: personchoice,
+              });
+          }
+        } else {
+          console.log(personchoice);
+          comparetworesults(personchoice, computerchoice);
+        }
+      }
+    });
+  }
 }
+setupbuttons();
 //Set up PIN pad for both logIn and createUser
 for (let index = 0; index < 10; index++) {
   const setupbuttonslog = "#number" + index + "Log";
@@ -504,22 +537,29 @@ function setUpupdateconnectionOnLogin(login) {
           let oponent = snapshot.val().playing;
           console.log(oponent);
           let owner = snapshot.val().owner;
+          console.log(loggedInName);
+
           if (owner === true) {
-            oponent;
+            gamename = loggedInName;
             let game = firebase.database().ref("game/" + loggedInName);
             game.on("value", function (snapshot) {
               //game is now in play
               $("#oponent").html(oponent);
               connectedGameInPlay = true;
               console.log(snapshot.val());
+              let gameObject = snapshot.val();
+              dealWithgameobject(gameObject, oponent);
             });
           } else {
+            gamename = oponent;
             let game = firebase.database().ref("game/" + oponent);
             game.on("value", function (snapshot) {
               //game is now in play
               $("#oponent").html(oponent);
               connectedGameInPlay = true;
               console.log(snapshot.val());
+              let gameObject = snapshot.val();
+              dealWithgameobject(gameObject, loggedInName);
             });
           }
         });
@@ -541,7 +581,51 @@ function setUpupdateconnectionOnLogin(login) {
     //default game never changes
   });
 }
-
+function dealWithgameobject(game, owner) {
+  let player1 = owner;
+  let player1Choice = game.player1Choice;
+  let player2Choice = game.player2Choice;
+  if (player1Choice === "waiting" || player2Choice === "waiting") {
+    if (player1 === loggedInName) {
+      if (player2Choice === "waiting") {
+        $("#yourchoicestatus").html("STATUS: Pending...");
+      } else {
+        $("#yourchoicestatus").html("STATUS: Chosen");
+      }
+      if (player1Choice === "waiting") {
+        $("#computerchoicestatus").html("STATUS: Pending...");
+      } else {
+        $("#computerchoicestatus").html("STATUS: Chosen");
+      }
+    } else {
+      if (player2Choice === "waiting") {
+        $("#computerchoicestatus").html("STATUS: Pending...");
+      } else {
+        $("#computerchoicestatus").html("STATUS: Chosen");
+      }
+      if (player1Choice === "waiting") {
+        $("#yourchoicestatus").html("STATUS: Pending...");
+      } else {
+        $("#yourchoicestatus").html("STATUS: Chosen");
+      }
+    }
+  } else {
+    if (player1 === loggedInName) {
+      comparetworesults(player2Choice, player1Choice);
+    } else {
+      comparetworesults(player1Choice, player2Choice);
+    }
+  }
+}
+function resetgame() {
+  firebase
+    .database()
+    .ref("game/" + gamename)
+    .update({
+      player2Choice: "waiting",
+      player1Choice: "waiting",
+    });
+}
 //LOG-IN:
 //User inputs name and submits
 //Database is queried for name
@@ -583,6 +667,7 @@ $("#submitLogIn").on("click", function () {
     let userName = locatedUserName[objectname].Name;
     let userimage = locatedUserName[objectname].avatarimage;
     loggedInName = userName;
+
     if (currentPinValue === actualPIN) {
       loggedIn = true;
       //logIn success
@@ -834,7 +919,11 @@ function beginslotmachinewin(choice1, choice2, method, gamewinlose) {
         $("#yourchoicestatus").html("STATUS: pending..");
         $("#computerchoicestatus").html("STATUS: pending..");
         setTimeout(function () {
-          getcomputerchoice();
+          if (connectedGameInPlay === true) {
+            resetgame();
+          } else {
+            getcomputerchoice();
+          }
           clicked = true;
           $("#explaination").css("max-width", "0");
         }, 1000);
@@ -867,7 +956,7 @@ $("#button2").on("click", function () {
 });
 // This function will detmine if you won or not as well as call
 // all necesary user interface adjusting functions
-function comparetworesults() {
+function comparetworesults(personchoice, computerchoice) {
   $("#youchoice").html("You chose: " + personchoice);
   $("#youchoice").html(
     "<img src='./assets/images/" + personchoice + ".png' class='image2'>"

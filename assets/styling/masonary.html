@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<style>
+    body {
+        margin: 0;
+
+    }
+
+    button {
+        margin: 10px;
+
+    }
+
+    .adjustments {
+        text-align: center;
+    }
+
+    .masonary-box {
+        margin: 0 auto;
+        width: fit-content;
+        border: solid 30px black;
+        display: grid;
+        column-count: 4;
+        grid-template-columns: 100px 100px 100px 100px 100px 100px;
+        column-gap: 1rem;
+    }
+
+    .column0 {
+        background-color: cyan;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        justify-content: space-between;
+
+    }
+
+    .column1 {
+        background-color: cyan;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        justify-content: space-between;
+
+
+    }
+
+    .column2 {
+        background-color: cyan;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        justify-content: space-between;
+
+
+    }
+
+    .column3 {
+        background-color: cyan;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        justify-content: space-between;
+
+
+    }
+
+    .column4 {
+        background-color: cyan;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        justify-content: space-between;
+
+
+    }
+
+    .column5 {
+        background-color: cyan;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        justify-content: space-between;
+
+
+    }
+
+    #item1 {
+        margin-top: 10px;
+
+        width: 100%;
+        height: 100px;
+        background-color: blueviolet;
+        display: inline-block;
+
+
+    }
+
+    #item0 {
+        margin-top: 10px;
+
+        width: 100%;
+        height: 100px;
+        background-color: rgb(226, 43, 43);
+        display: inline-block;
+
+
+    }
+
+    #item2 {
+        margin-top: 10px;
+
+        width: 100%;
+        height: 150px;
+        background-color: pink;
+        display: inline-block;
+    }
+
+    #item3 {
+        margin-top: 10px;
+        width: 100%;
+        height: 300px;
+        background-color: green;
+        display: inline-block;
+
+    }
+
+    #item4 {
+        margin-top: 10px;
+        width: 100%;
+        height: 90px;
+        background-color: greenyellow;
+        display: inline-block;
+
+    }
+
+    #item5 {
+        margin-top: 10px;
+        width: 100%;
+        height: 200px;
+        background-color: black;
+        display: inline-block;
+    }
+
+    #item6 {
+        margin-top: 10px;
+        width: 100%;
+        height: 60px;
+        background-color: orangered;
+        display: inline-block;
+    }
+
+    #item7 {
+        margin-top: 10px;
+        width: 100%;
+        height: 170px;
+        background-color: burlywood;
+        display: inline-block;
+    }
+
+    #item8 {
+        margin-top: 10px;
+        width: 100%;
+        height: 100px;
+        background-color: blueviolet;
+        display: inline-block;
+    }
+
+    #item9 {
+        margin-top: 10px;
+        width: 100%;
+        height: 80px;
+        background-color: rgb(0, 255, 170);
+        display: inline-block;
+    }
+
+    #item10 {
+        margin-top: 10px;
+        width: 100%;
+        height: 170px;
+        background-color: rgb(222, 135, 196);
+        display: inline-block;
+    }
+
+    #item11 {
+        margin-top: 10px;
+        width: 100%;
+        height: 120px;
+        background-color: rgb(32, 15, 48);
+        display: inline-block;
+    }
+
+    #item12 {
+        margin-top: 10px;
+        width: 100%;
+        height: 80px;
+        background-color: rgb(71, 9, 9);
+        display: inline-block;
+    }
+
+    #item13 {
+        margin-top: 10px;
+        width: 100%;
+        height: 170px;
+        background-color: rgb(255, 40, 190);
+        display: inline-block;
+    }
+
+    #item14 {
+        margin-top: 10px;
+        width: 100%;
+        height: 120px;
+        background-color: rgb(0, 99, 112);
+        display: inline-block;
+    }
+</style>
+
+<body>
+    <div class=adjustments>
+
+        <p id=inputInstructions>PICK A NUMBER BETWEEN TWO AND SIX</p>
+        <div>
+            <input type="number" id="numberOfColumns" name="fname" min="2" max="6"><button
+                id=submitNumber>SUBMIT</button>
+        </div>
+        <div>
+            <button id="spaceBetween">space-between</button>
+            <button id="flexStart">flex-start</button>
+        </div>
+    </div>
+    <div class=masonary-box>
+        <div class=column0>
+        </div>
+        <div class=column1>
+        </div>
+        <div class=column2>
+        </div>
+        <div class=column3>
+        </div>
+        <div class=column4>
+        </div>
+        <div class=column5>
+        </div>
+    </div>
+    <div id=item0></div>
+    <div id=item1></div>
+    <div id=item2></div>
+    <div id=item3></div>
+    <div id=item4></div>
+    <div id=item5></div>
+    <div id=item6></div>
+    <div id=item7></div>
+    <div id=item8></div>
+    <div id=item9></div>
+    <div id=item10></div>
+    <div id=item11></div>
+    <div id=item12></div>
+    <div id=item13></div>
+    <div id=item14></div>
+    <script>
+
+        let object = {
+            numberArray: [],
+            idArray: []
+        }
+        class Column {
+            constructor(number) {
+                this.columnClass = ".column" + number;
+                this.columnArray = [];
+            }
+        }
+        function createObject() {
+            // object.numberArray = [];
+            // object.idArray = [];
+            for (let index = 0; index < 15; index++) {
+                const element = "item" + index;
+                let htmlHeight = document.getElementById(element).offsetHeight;
+                object.numberArray.push(htmlHeight);
+                object.idArray.push(element);
+            }
+        }
+        let numberAAA = object.numberArray;
+        let idAAA = object.idArray;
+        let columnsArray = [];
+        createObject();
+        function sortingarray(numberArray, columns, idArray) {
+            while (columnsArray.length > 0) {
+                columnsArray.pop();
+            }
+            for (let i = 0; i < columns; i++) {
+                columnsArray[i] = new Column(i);
+            }
+            var array = [...numberArray];
+            var idarray2 = [...idArray];
+            let arraylength = numberArray.length - columns;
+            let columnArray = [];
+
+            function findLargestThenRemove(array) {
+                let largest = Math.max(...array);
+                return { number: largest, id: removeitem(largest) };
+            }
+            //remove item 
+            function removeitem(number2) {
+                const index = array.indexOf(number2);
+                let boxid = idarray2[index];
+                array.splice(index, 1);
+                idarray2.splice(index, 1);
+                return boxid;
+            }
+            //Set up columnArray
+            for (let index = 0; index < columns; index++) {
+                let largestnumberobject = findLargestThenRemove(array);
+                let idOfElemnet = largestnumberobject.id;
+                columnsArray[index].columnArray.push(idOfElemnet);
+                columnArray.push(largestnumberobject.number);
+            }
+            let smallest;
+            let locator;
+
+            function findsmallest(totalArray) {
+                smallest = Math.min(...totalArray);
+                locator = totalArray.indexOf(smallest);
+                return locator;
+            }
+            for (let index = 0; index < arraylength; index++) {
+                let largestNumberObject = findLargestThenRemove(array);
+                let locator = findsmallest(columnArray);
+                columnArray[locator] = columnArray[locator] + largestNumberObject.number;
+                let locatorPlusOne = locator;
+                columnsArray[locatorPlusOne].columnArray.push(largestNumberObject.id);
+            }
+        }
+
+        let lamb = [...numberAAA];
+        let sheep = [...idAAA];
+        sortingarray(numberAAA, 4, idAAA);
+        appendtocolumns();
+
+
+        function appendtocolumns(numberOfColumns) {
+            let switcher = true;
+            columnsArray.forEach(e => {
+                e.columnArray.forEach(element => {
+                    let itemstring = "#" + element
+                    let item = $(itemstring).clone();
+                    $(itemstring).remove();
+                    if (switcher === true) {
+                        $(e.columnClass).append(item);
+                        switcher = generaterandomTrueFalse()
+                    } else {
+                        $(e.columnClass).prepend(item);
+                        switcher = generaterandomTrueFalse();
+                    }
+                });
+
+            });
+
+
+        }
+
+        function generaterandomTrueFalse() {
+            randomnumber = Math.floor(Math.random() * Math.floor(2));
+            if (randomnumber === 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        //if biggest is less than 15 add the smallest
+        //if bigest plus smallest if less add the next smallest 
+        //next 
+        $("#spaceBetween").on("click", function () {
+            columnsArray.forEach(element => {
+                element.columnClass
+                $(element.columnClass).css("justify-content", "space-between");
+            });
+            // $(".column1").css("justify-content", "space-between");
+            // $(".column2").css("justify-content", "space-between");
+            // $(".column3").css("justify-content", "space-between");
+        });
+        $("#flexStart").on("click", function () {
+            columnsArray.forEach(element => {
+                element.columnClass
+                $(element.columnClass).css("justify-content", "flex-start");
+            });
+        });
+        $('#submitNumber').on("click", function () {
+            let input = $("#numberOfColumns").val();
+            if ((input >= 2) && (input <= 6)) {
+
+                sortingarray(lamb, input, sheep);
+                appendtocolumns();
+            } else {
+                $("#inputInstructions").css("color", "red");
+                setTimeout(() => {
+                    $("#inputInstructions").css("color", "black");
+                }, 1000);
+            }
+
+        })
+    </script>
+</body>
+
+</html>
