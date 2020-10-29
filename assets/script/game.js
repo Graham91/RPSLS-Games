@@ -738,8 +738,10 @@ $("#logIn").on("click", function () {
     $("#logInMain").css("display", "none");
     logIn = false;
   } else {
+    $("#firstStageCreate").css("display", "none");
     $("#logInMain").css("display", "block");
     logIn = true;
+    createUser = false;
   }
 });
 //open and closing Create User
@@ -748,7 +750,9 @@ $("#CreatUser").on("click", function () {
     $("#firstStageCreate").css("display", "none");
     createUser = false;
   } else {
+    $("#logInMain").css("display", "none");
     $("#firstStageCreate").css("display", "block");
+    logIn = false;
     createUser = true;
   }
 });
