@@ -354,6 +354,7 @@ header {
   line-height: 50px;
   height: 50px;
   transition: 1s;
+  cursor: pointer;
 }
 .directionheader:hover {
   color: black;
@@ -682,6 +683,7 @@ header {
   right: 50px;
   color: rgb(36, 71, 35);
   font-size: 4em;
+  cursor: pointer;
   /* text-shadow: black; */
 }
 .avatarchoicebox {
