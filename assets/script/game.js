@@ -290,6 +290,18 @@ function setUpUsersAvatarOnBoard(user, imagenumber) {
   }
 }
 
+function getOtherUsersInfo(name) {
+  return firebase
+    .database()
+    .ref("/users/" + name)
+    .once("value")
+    .then(function (snapshot) {
+      let avatar = snapshot.val().avatarimage;
+      console.log("this is the avatar number:" + avatar);
+      let imageSRC = imageObjectKey[avatar];
+      $("#rightside").attr("src", imageSRC);
+    });
+}
 //VIEW AVAILABLE USERS:
 //database is queried for 10 users who are available
 //each user is then displayed in a list next to a request game button
@@ -408,7 +420,11 @@ $(document).on("click", ".Acceptbutton", function (event) {
       //if avialable allow push
 
       let available = snapshot.val().available;
+      let avatar = snapshot.val().avatarimage;
+      console.log("this is the avatar number:" + avatar);
+      let imageSRC = imageObjectKey[avatar];
       if (available === true) {
+        $("#rightside").attr("src", imageSRC);
         $(findDivID).css("border-color", "green");
         $(findDivID).children(".userNameFindGame").html("Accepted");
         setTimeout(function () {
@@ -525,6 +541,8 @@ function searchForSpecificUser(searchterm) {
 }
 function setUpupdateconnectionOnLogin(login) {
   var inGameChecker = firebase.database().ref("users/" + login + "/inGame");
+  let uppercase = login.toUpperCase() + " CHOICE";
+  $("#yourChoice").html(uppercase);
   inGameChecker.on("value", function (snapshot) {
     console.log(snapshot.val());
     let inGame = snapshot.val();
@@ -538,7 +556,8 @@ function setUpupdateconnectionOnLogin(login) {
           console.log(oponent);
           let owner = snapshot.val().owner;
           console.log(loggedInName);
-
+          let uppercaseO = oponent.toUpperCase() + " CHOICE";
+          $("#theirChoice").html(uppercaseO);
           if (owner === true) {
             gamename = loggedInName;
             let game = firebase.database().ref("game/" + loggedInName);
@@ -551,6 +570,7 @@ function setUpupdateconnectionOnLogin(login) {
               dealWithgameobject(gameObject, oponent);
             });
           } else {
+            getOtherUsersInfo(oponent);
             gamename = oponent;
             let game = firebase.database().ref("game/" + oponent);
             game.on("value", function (snapshot) {
