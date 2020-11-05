@@ -580,6 +580,7 @@ function setUpupdateconnectionOnLogin(login) {
     } else {
       console.log("not playing a game");
       connectedGameInPlay = false;
+      //make oposition computer
     }
 
     //if equals true run search
@@ -648,9 +649,26 @@ function resetgame() {
 //if in game close game for opponent
 //set charactor to unavailable if out of game.
 function logout() {
+  //reset to guest
+  //reset to computer
+  //hide logout
+  //hide change avatar
+  //show login
+  //show create user
   if (inGame === true) {
+    endGame();
   } else {
+    //make find game visible again
+    //update user to unavailble
   }
+}
+//End Game
+function endGame() {
+  //find out if owner
+  //find other player and change there inGame status so the listeners stop
+  //then delete game
+  //hide endgame
+  //make find game visible again
 }
 //LOG-IN:
 //User inputs name and submits
