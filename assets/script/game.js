@@ -59,22 +59,6 @@ const imageObjectKey = {
 //     });
 // }
 
-//MAKE REQUEST:
-//user clicks request game button
-//current users made requests is updated
-//selected users request received is updated
-//both of these are displayed on user screen
-//REQUEST ACCEPTED:
-//If requested user is available
-//game is built
-//BUILD GAME:
-//Once a request is accepted a game is then generated with both player?ID
-//and both player?choice = "null"
-//userInformation is updated by emptying requestsRecieved & requestsMade for both players
-//userinformation is updated by changing available to false
-//game is queried using the player?id associated with the curent user
-//RESET GAME:
-//Player?choices returned too null
 //LEAVE GAME: When a player leaves a game the game is then deleted
 //game is found using the player?id associated with the curent user
 //userinformation is updated by changing available to true
@@ -263,6 +247,7 @@ function setupbuttons() {
   }
 }
 setupbuttons();
+
 //Set up PIN pad for both logIn and createUser
 for (let index = 0; index < 10; index++) {
   const setupbuttonslog = "#number" + index + "Log";
@@ -281,15 +266,7 @@ for (let index = 0; index < 10; index++) {
   });
 }
 
-function setUpUsersAvatarOnBoard(user, imagenumber) {
-  let imageSRC = imageObjectKey[imagenumber];
-  if (user === "you") {
-    $("#leftside").attr("src", imageSRC);
-  } else {
-    $("#rightside").attr("src", imageSRC);
-  }
-}
-
+//in the case that the opositions info has not already been shared this will go and fetch it
 function getOtherUsersInfo(name) {
   return firebase
     .database()
@@ -363,6 +340,7 @@ function findAvailableUser() {
     }
   });
 }
+
 //search your data for requested Games
 function findrequestedgames() {
   let findUsersrequests = users.orderByChild("Name").equalTo(loggedInName);
@@ -392,6 +370,7 @@ function findrequestedgames() {
     }
   });
 }
+
 //refresh avaible Users display
 $(".refreshbutton").on("click", function () {
   if (wait === true) {
@@ -406,6 +385,16 @@ $(".refreshbutton").on("click", function () {
     }, 1000);
   }
 });
+
+//REQUEST ACCEPTED:
+//If requested user is available
+//game is built
+//BUILD GAME:
+//Once a request is accepted a game is then generated with both player?ID
+//and both player?choice = "null"
+//userInformation is updated by emptying requestsRecieved & requestsMade for both players
+//userinformation is updated by changing available to false
+//game is queried using the player?id associated with the curent user
 //accept a game request
 $(document).on("click", ".Acceptbutton", function (event) {
   let parentdiv = $(event.target).parent("div");
@@ -473,6 +462,11 @@ $(document).on("click", ".Acceptbutton", function (event) {
       //once ingame is active then sets up game to work with display
     });
 });
+//MAKE REQUEST:
+//user clicks request game button
+//current users made requests is updated
+//selected users request received is updated
+//both of these are displayed on user screen
 //request a game from another user
 $(document).on("click", ".requestbutton", function (event) {
   console.log("hi");
@@ -601,6 +595,7 @@ function setUpupdateconnectionOnLogin(login) {
     //default game never changes
   });
 }
+//this function handles changes in the firebase Game object
 function dealWithgameobject(game, owner) {
   let player1 = owner;
   let player1Choice = game.player1Choice;
@@ -637,6 +632,9 @@ function dealWithgameobject(game, owner) {
     }
   }
 }
+//RESET GAME:
+//Player?choices returned too null
+//this Resets games after the animation has finished
 function resetgame() {
   firebase
     .database()
@@ -645,6 +643,14 @@ function resetgame() {
       player2Choice: "waiting",
       player1Choice: "waiting",
     });
+}
+//Logout
+//if in game close game for opponent
+//set charactor to unavailable if out of game.
+function logout() {
+  if (inGame === true) {
+  } else {
+  }
 }
 //LOG-IN:
 //User inputs name and submits
@@ -784,6 +790,15 @@ $("#saveavatarbutton").on("click", function () {
   setUpUsersAvatarOnBoard("you", selectedAvatar);
   $("#findgame").css("display", "block");
 });
+//the function aligns the visual avatars with the firebase preference
+function setUpUsersAvatarOnBoard(user, imagenumber) {
+  let imageSRC = imageObjectKey[imagenumber];
+  if (user === "you") {
+    $("#leftside").attr("src", imageSRC);
+  } else {
+    $("#rightside").attr("src", imageSRC);
+  }
+}
 //CREATE USER:
 //User inputs name and submits
 //database is queried for name
@@ -1007,8 +1022,13 @@ function comparetworesults(personchoice, computerchoice) {
     setTimeout(function () {
       $("#yourchoicestatus").html("STATUS: pending..");
       $(".panel").removeClass("flip");
+
       setTimeout(function () {
-        getcomputerchoice();
+        if (connectedGameInPlay === true) {
+          resetgame();
+        } else {
+          getcomputerchoice();
+        }
         clicked = true;
       }, 1000);
     }, 3000);
