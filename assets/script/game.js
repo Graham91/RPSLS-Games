@@ -136,10 +136,13 @@ let wait = false;
 let findgame = false;
 let logIn = false;
 let createUser = false;
+let changeAvatar = false;
 let loggedInName;
 let selectedAvatar = 1;
 let loggedIn = false;
 let connectedGameInPlay = false;
+let ownerLocalVar;
+let oponentLocalvar;
 let gamename = "graham9";
 // player class
 class PLayer {
@@ -221,6 +224,7 @@ function setupbuttons() {
         $("#yourchoicestatus").html("STATUS: chosen");
         personchoice = aviablechoices[i];
         console.log("this is the gamename" + gamename);
+        console.log("connectedGameInPlay: " + connectedGameInPlay);
         if (connectedGameInPlay === true) {
           if (gamename === loggedInName) {
             firebase
@@ -349,7 +353,9 @@ function findrequestedgames() {
     let avialableUsers2 = avialableUsers[loggedInName].requestRecieved;
     console.log(avialableUsers2);
     if (typeof avialableUsers2 === "undefined") {
-      $(".nonavailiblityrequest").css("display", "block");
+      setTimeout(function () {
+        $(".nonavailiblityrequest").css("display", "block");
+      }, 500);
     } else {
       let objectname = Object.getOwnPropertyNames(avialableUsers2);
       console.log();
@@ -413,6 +419,8 @@ $(document).on("click", ".Acceptbutton", function (event) {
       console.log("this is the avatar number:" + avatar);
       let imageSRC = imageObjectKey[avatar];
       if (available === true) {
+        resetScores();
+        $("#findgamemain").css("display", "none");
         $("#rightside").attr("src", imageSRC);
         $(findDivID).css("border-color", "green");
         $(findDivID).children(".userNameFindGame").html("Accepted");
@@ -548,38 +556,55 @@ function setUpupdateconnectionOnLogin(login) {
         .then(function (snapshot) {
           let oponent = snapshot.val().playing;
           console.log(oponent);
+          oponentLocalvar = oponent;
           let owner = snapshot.val().owner;
           console.log(loggedInName);
+          connectedGameInPlay = true;
           let uppercaseO = oponent.toUpperCase() + " CHOICE";
           $("#theirChoice").html(uppercaseO);
           if (owner === true) {
+            ownerLocalVar = true;
             gamename = loggedInName;
             let game = firebase.database().ref("game/" + loggedInName);
             game.on("value", function (snapshot) {
               //game is now in play
-              $("#oponent").html(oponent);
-              connectedGameInPlay = true;
-              console.log(snapshot.val());
               let gameObject = snapshot.val();
-              dealWithgameobject(gameObject, oponent);
+              if (connectedGameInPlay === true) {
+                $("#endgame").css("display", "block");
+                $("#findgame").css("display", "none");
+                $("#oponent").html(oponent);
+                dealWithgameobject(gameObject, oponent);
+              }
+              // console.log(snapshot.val());
             });
           } else {
+            ownerLocalVar = false;
             getOtherUsersInfo(oponent);
             gamename = oponent;
             let game = firebase.database().ref("game/" + oponent);
             game.on("value", function (snapshot) {
               //game is now in play
-              $("#oponent").html(oponent);
-              connectedGameInPlay = true;
-              console.log(snapshot.val());
+              // console.log(snapshot.val());
               let gameObject = snapshot.val();
-              dealWithgameobject(gameObject, loggedInName);
+              if (connectedGameInPlay === true) {
+                $("#oponent").html(oponent);
+                $("#endgame").css("display", "block");
+                $("#findgame").css("display", "none");
+                dealWithgameobject(gameObject, loggedInName);
+              }
             });
           }
         });
     } else {
       console.log("not playing a game");
+      $("#rightside").attr("src", imageObjectKey[5]);
+      $("#theirChoice").html("COMPUTER CHOICE");
+      $("#oponent").html("Computer");
+      $("#endgame").css("display", "none");
+      $("#findgame").css("display", "block");
+      getcomputerchoice();
       connectedGameInPlay = false;
+      resetScores();
       //make oposition computer
     }
 
@@ -645,25 +670,92 @@ function resetgame() {
       player1Choice: "waiting",
     });
 }
+//Reset Scores
+function resetScores() {
+  $("#yourwinnumber").html("0");
+  $("#yourlossnumber").html("0");
+  $("#theirwinnumber").html("0");
+  $("#theirlossnumber").html("0");
+}
 //Logout
 //if in game close game for opponent
 //set charactor to unavailable if out of game.
 function logout() {
   //reset to guest
-  //reset to computer
+  loggedIn = false;
+  $("#leftside").attr("src", imageObjectKey[1]);
+  $("#yourChoice").html("GUEST CHOICE");
+  $("#playerNameYou").html("Guest");
+  //reset scores
+  resetScores();
   //hide logout
+  $("#logout").css("display", "none");
   //hide change avatar
+  $("#changeAvatar").css("display", "none");
+  //hide engame
+  $("#endgame").css("display", "none");
   //show login
+  $("#logIn").css("display", "block");
   //show create user
-  if (inGame === true) {
-    endGame();
+  $("#CreatUser").css("display", "block");
+  //make find game visible again
+  $("#findgame").css("display", "block");
+  //reset to computer
+  connectedGameInPlay = false;
+  firebase
+    .database()
+    .ref("users/" + loggedInName)
+    .update({
+      inGame: false,
+      available: true,
+    })
+    .then(function () {
+      console.log(oponentLocalvar);
+      firebase
+        .database()
+        .ref("users/" + oponentLocalvar)
+        .update({
+          inGame: false,
+          available: true,
+        })
+        .then(function () {
+          endGame();
+          $("#rightside").attr("src", imageObjectKey[5]);
+          $("#theirChoice").html("COMPUTER CHOICE");
+          $("#oponent").html("Computer");
+          getcomputerchoice();
+          connectedGameInPlay = false;
+          // for (let i = 0; i < 5; i++) {
+          //   let idgrabber = "#" + aviablechoices[i];
+          //   $(idgrabber).off();
+          // }
+          // setupbuttons();
+        });
+    });
+}
+function resetScreen() {
+  if (loggedIn === false) {
+    $("#leftside").attr("src", imageObjectKey[1]);
+    $("#yourChoice").html("GUEST CHOICE");
+    $("#playerNameYou").html("Guest");
   } else {
-    //make find game visible again
-    //update user to unavailble
+    $("#rightside").attr("src", imageObjectKey[5]);
+    $("#theirChoice").html("COMPUTER CHOICE");
+    $("#oponent").html("Computer");
   }
 }
 //End Game
 function endGame() {
+  // inGame = false;
+  console.log("Endgame is Working");
+  let gameName;
+  if (ownerLocalVar === true) {
+    gameName = firebase.database().ref("game/" + loggedInName);
+    gameName.remove();
+  } else {
+    gameName = firebase.database().ref("game/" + oponentLocalvar);
+    gameName.remove();
+  }
   //find out if owner
   //find other player and change there inGame status so the listeners stop
   //then delete game
@@ -720,6 +812,7 @@ $("#submitLogIn").on("click", function () {
       $("#logInMain").css("display", "none");
       $("#logIn").css("display", "none");
       $("#logout").css("display", "block");
+      $("#changeAvatar").css("display", "block");
       $("#CreatUser").css("display", "none");
       $("#logInfirst").css("display", "none");
       findAvailableUser();
@@ -780,7 +873,20 @@ $("#CreatUser").on("click", function () {
     createUser = true;
   }
 });
-
+//open and close Change avatar
+$("#changeAvatar").on("click", function () {
+  if (changeAvatar === true) {
+    $("#secondStageCreate").css("display", "none");
+    changeAvatar = false;
+  } else {
+    $("#secondStageCreate").css("display", "block");
+    changeAvatar = true;
+  }
+});
+//logout
+$("#logout").on("click", function () {
+  logout();
+});
 //AVATAR STUFF:
 //turns chosen avatar red updates selected avatar
 $(".avatarshadow").on("click", function () {
@@ -795,6 +901,7 @@ $(".avatarshadow").on("click", function () {
 $("#skipavatarbutton").on("click", function () {
   $("#secondStageCreate").css("display", "none");
   $("#findgame").css("display", "block");
+  changeAvatar = false;
 });
 //save avatar preference to data base
 $("#saveavatarbutton").on("click", function () {
@@ -805,6 +912,7 @@ $("#saveavatarbutton").on("click", function () {
       avatarimage: selectedAvatar,
     });
   $("#secondStageCreate").css("display", "none");
+  changeAvatar = false;
   setUpUsersAvatarOnBoard("you", selectedAvatar);
   $("#findgame").css("display", "block");
 });
@@ -873,6 +981,7 @@ $("#submitCreatePin").on("click", function () {
     $("#logIn").css("display", "none");
     $("#logout").css("display", "block");
     $("#CreatUser").css("display", "none");
+    $("#changeAvatar").css("display", "block");
     $("#logInfirst").css("display", "none");
     $("#welcomelogin").html("Welcome " + createUserInput + "!");
     $("#playerNameYou").html(createUserInput);
