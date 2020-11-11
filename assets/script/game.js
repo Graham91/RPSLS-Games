@@ -967,6 +967,7 @@ $("#logIn").on("click", function () {
   } else {
     $("#LoginPIN").css("display", "none");
     $("#submitLoginName").show();
+    $("#firstStageCreate").css("display", "none");
     $("#logInMain").css("display", "block");
     logIn = true;
     createUser = false;
