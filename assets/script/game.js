@@ -144,6 +144,7 @@ let connectedGameInPlay = false;
 let ownerLocalVar;
 let oponentLocalvar;
 let gamename = "graham9";
+let requestArray = [];
 // player class
 class PLayer {
   constructor(choice, name) {
@@ -329,17 +330,46 @@ function findAvailableUser() {
           $(".nonavailiblity").css("display", "block");
         }
       } else {
-        $(".usersBox2").append(
-          "<div class=individualUser id='" +
-            name +
-            "'><img src='" +
-            imageObjectKey[picture] +
-            "' class='avatarchoice3'/><div class=userNameFindGame id='finduser" +
-            index +
-            "'>" +
-            name +
-            "</div><div class=requestbutton>Request Game</div></div>"
-        );
+        if (requestArray[0] === undefined) {
+          console.log("empty array");
+          $(".usersBox2").append(
+            "<div class=individualUser id='" +
+              name +
+              "'><img src='" +
+              imageObjectKey[picture] +
+              "' class='avatarchoice3'/><div class=userNameFindGame id='finduser" +
+              index +
+              "'>" +
+              name +
+              "</div><div class=requestbutton>Request Game</div></div>"
+          );
+        } else {
+          if (redudencyUserArray.includes(name)) {
+            $(".usersBox2").append(
+              "<div class=individualUser id='" +
+                name +
+                "' style='border-color:yellow;'><img src='" +
+                imageObjectKey[picture] +
+                "' class='avatarchoice3' /><div class=userNameFindGame id='finduser" +
+                index +
+                "'>" +
+                name +
+                "</div><div class=requestbutton style='color:yellow;border-color:yellow;'>Request Pending</div></div>"
+            );
+          } else {
+            $(".usersBox2").append(
+              "<div class=individualUser id='" +
+                name +
+                "'><img src='" +
+                imageObjectKey[picture] +
+                "' class='avatarchoice3'/><div class=userNameFindGame id='finduser" +
+                index +
+                "'>" +
+                name +
+                "</div><div class=requestbutton>Request Game</div></div>"
+            );
+          }
+        }
       }
     }
   });
@@ -360,18 +390,38 @@ function findrequestedgames() {
       let objectname = Object.getOwnPropertyNames(avialableUsers2);
       console.log();
       $(".nonavailiblityrequest").css("display", "none");
+      $(".usersBox4").empty();
+      let redudencyUserArray = [];
       for (let index = 0; index < objectname.length; index++) {
         const itemname = objectname[index];
         const name = avialableUsers2[itemname];
-        $(".usersBox4").append(
-          "<div class=individualUser id='" +
-            name +
-            "'><img src='https://i.imgur.com/nquo5H4.png' class='avatarchoice3'/><div class=userNameFindGame id='finduser" +
-            index +
-            "'>" +
-            name +
-            "</div><div class=Acceptbutton>Accept Game</div></div>"
-        );
+        if (redudencyUserArray[0] === undefined) {
+          $(".usersBox4").append(
+            "<div class=individualUser id='" +
+              name +
+              "'><img src='https://i.imgur.com/nquo5H4.png' class='avatarchoice3'/><div class=userNameFindGame id='finduser" +
+              index +
+              "'>" +
+              name +
+              "</div><div class=Acceptbutton>Accept Game</div></div>"
+          );
+          redudencyUserArray.push(name);
+        } else {
+          if (redudencyUserArray.includes(name)) {
+            console.log("checked and found name for redundancy");
+          } else {
+            $(".usersBox4").append(
+              "<div class=individualUser id='" +
+                name +
+                "'><img src='https://i.imgur.com/nquo5H4.png' class='avatarchoice3'/><div class=userNameFindGame id='finduser" +
+                index +
+                "'>" +
+                name +
+                "</div><div class=Acceptbutton>Accept Game</div></div>"
+            );
+            redudencyUserArray.push(name);
+          }
+        }
       }
     }
   });
@@ -404,6 +454,7 @@ $(".refreshbutton").on("click", function () {
 //accept a game request
 $(document).on("click", ".Acceptbutton", function (event) {
   let parentdiv = $(event.target).parent("div");
+
   let finddiv = $(parentdiv).attr("id");
   let findDivID = "#" + finddiv;
   //make sure user is avialble
@@ -479,9 +530,16 @@ $(document).on("click", ".Acceptbutton", function (event) {
 $(document).on("click", ".requestbutton", function (event) {
   console.log("hi");
   let parentdiv = $(event.target).parent("div");
+  let actualDiv = $(event.target);
+  $(actualDiv).html("Request Pending");
+  $(actualDiv).css("color", "yellow");
+  $(actualDiv).css("border-color", "yellow");
+  $(parentdiv).css("border-color", "yellow");
   let finddiv = $(parentdiv).attr("id");
   let findDivID = "#" + finddiv;
   console.log(finddiv);
+  requestArray.push(finddiv);
+
   // searchForSpecificUser(finddiv);
 
   return firebase
@@ -549,6 +607,7 @@ function setUpupdateconnectionOnLogin(login) {
     console.log(snapshot.val());
     let inGame = snapshot.val();
     if (inGame === true) {
+      requestArray = [];
       return firebase
         .database()
         .ref("/users/" + loggedInName)
@@ -572,6 +631,8 @@ function setUpupdateconnectionOnLogin(login) {
               if (connectedGameInPlay === true) {
                 $("#endgame").css("display", "block");
                 $("#findgame").css("display", "none");
+                $("#findgamemain").css("display", "none");
+                findgame = false;
                 $("#oponent").html(oponent);
                 dealWithgameobject(gameObject, oponent);
               }
@@ -590,6 +651,8 @@ function setUpupdateconnectionOnLogin(login) {
                 $("#oponent").html(oponent);
                 $("#endgame").css("display", "block");
                 $("#findgame").css("display", "none");
+                $("#findgamemain").css("display", "none");
+                findgame = false;
                 dealWithgameobject(gameObject, loggedInName);
               }
             });
@@ -681,27 +744,90 @@ function resetScores() {
 //if in game close game for opponent
 //set charactor to unavailable if out of game.
 function logout() {
-  //reset to guest
-  loggedIn = false;
-  $("#leftside").attr("src", imageObjectKey[1]);
-  $("#yourChoice").html("GUEST CHOICE");
-  $("#playerNameYou").html("Guest");
-  //reset scores
-  resetScores();
-  //hide logout
-  $("#logout").css("display", "none");
-  //hide change avatar
-  $("#changeAvatar").css("display", "none");
-  //hide engame
-  $("#endgame").css("display", "none");
-  //show login
-  $("#logIn").css("display", "block");
-  //show create user
-  $("#CreatUser").css("display", "block");
+  requestArray = [];
+  if (connectedGameInPlay === true) {
+    //reset to guest
+    loggedIn = false;
+    $("#welcomelogin").empty();
+    $("#leftside").attr("src", imageObjectKey[1]);
+    $("#yourChoice").html("GUEST CHOICE");
+    $("#playerNameYou").html("Guest");
+    //reset scores
+    resetScores();
+    //hide logout
+    $("#logout").css("display", "none");
+    //hide change avatar
+    $("#changeAvatar").css("display", "none");
+    //hide engame
+    $("#endgame").css("display", "none");
+    //show login
+    $("#logIn").css("display", "block");
+    //show create user
+    $("#CreatUser").css("display", "block");
+    //make find game visible again
+    $("#findgame").css("display", "block");
+
+    //reset to computer
+    connectedGameInPlay = false;
+    endGameFull();
+  } else {
+    loggedIn = false;
+    $("#welcomelogin").empty();
+    $("#leftside").attr("src", imageObjectKey[1]);
+    $("#yourChoice").html("GUEST CHOICE");
+    $("#playerNameYou").html("Guest");
+    //reset scores
+    resetScores();
+    //hide logout
+    $("#logout").css("display", "none");
+    //hide change avatar
+    $("#changeAvatar").css("display", "none");
+    //hide engame
+    $("#endgame").css("display", "none");
+    //show login
+    $("#logIn").css("display", "block");
+    //show create user
+    $("#CreatUser").css("display", "block");
+    //make find game visible again
+    $("#findgame").css("display", "block");
+    firebase
+      .database()
+      .ref("users/" + loggedInName)
+      .update({
+        available: false,
+      });
+  }
+}
+function resetScreen() {
+  if (loggedIn === false) {
+    $("#leftside").attr("src", imageObjectKey[1]);
+    $("#yourChoice").html("GUEST CHOICE");
+    $("#playerNameYou").html("Guest");
+  } else {
+    $("#rightside").attr("src", imageObjectKey[5]);
+    $("#theirChoice").html("COMPUTER CHOICE");
+    $("#oponent").html("Computer");
+  }
+}
+//End Game
+function endGame() {
+  // inGame = false;
+  console.log("Endgame is Working");
+  let gameName;
+  if (ownerLocalVar === true) {
+    gameName = firebase.database().ref("game/" + loggedInName);
+    gameName.remove();
+  } else {
+    gameName = firebase.database().ref("game/" + oponentLocalvar);
+    gameName.remove();
+  }
+  //find out if owner
+  //find other player and change there inGame status so the listeners stop
+  //then delete game
+  //hide endgame
   //make find game visible again
-  $("#findgame").css("display", "block");
-  //reset to computer
-  connectedGameInPlay = false;
+}
+function endGameFull() {
   firebase
     .database()
     .ref("users/" + loggedInName)
@@ -733,35 +859,6 @@ function logout() {
         });
     });
 }
-function resetScreen() {
-  if (loggedIn === false) {
-    $("#leftside").attr("src", imageObjectKey[1]);
-    $("#yourChoice").html("GUEST CHOICE");
-    $("#playerNameYou").html("Guest");
-  } else {
-    $("#rightside").attr("src", imageObjectKey[5]);
-    $("#theirChoice").html("COMPUTER CHOICE");
-    $("#oponent").html("Computer");
-  }
-}
-//End Game
-function endGame() {
-  // inGame = false;
-  console.log("Endgame is Working");
-  let gameName;
-  if (ownerLocalVar === true) {
-    gameName = firebase.database().ref("game/" + loggedInName);
-    gameName.remove();
-  } else {
-    gameName = firebase.database().ref("game/" + oponentLocalvar);
-    gameName.remove();
-  }
-  //find out if owner
-  //find other player and change there inGame status so the listeners stop
-  //then delete game
-  //hide endgame
-  //make find game visible again
-}
 //LOG-IN:
 //User inputs name and submits
 //Database is queried for name
@@ -783,12 +880,13 @@ $("#submitLoginName").on("click", function () {
     } else {
       locatedUserName = snapshot.val();
       $("#LoginPIN").css("display", "block");
-      $("#submitLoginName").css("display", "none");
+      $("#submitLoginName").hide();
     }
   });
 });
 //logIn after Pin is entered
 $("#submitLogIn").on("click", function () {
+  requestArray = [];
   event.preventDefault();
   let currentPinValue = $("#logpinInput").val();
   if (currentPinValue.length < 4) {
@@ -807,14 +905,24 @@ $("#submitLogIn").on("click", function () {
     if (currentPinValue === actualPIN) {
       loggedIn = true;
       //logIn success
+      firebase
+        .database()
+        .ref("users/" + loggedInName)
+        .update({
+          available: true,
+        });
+      $("#LoginPIN").css("display", "none");
       $("#welcomelogin").html("Welcome " + userName + "!");
       $("#playerNameYou").html(userName);
+      $("#logininput").val("");
+      $("#logpinInput").val("");
       $("#logInMain").css("display", "none");
       $("#logIn").css("display", "none");
       $("#logout").css("display", "block");
       $("#changeAvatar").css("display", "block");
       $("#CreatUser").css("display", "none");
       $("#logInfirst").css("display", "none");
+      logIn = false;
       findAvailableUser();
       setUpUsersAvatarOnBoard("you", userimage);
       findrequestedgames();
@@ -853,9 +961,12 @@ $("#findgame").on("click", function () {
 $("#logIn").on("click", function () {
   if (logIn === true) {
     $("#logInMain").css("display", "none");
+    $("#submitLoginName").show();
+    $("#LoginPIN").css("display", "none");
     logIn = false;
   } else {
-    $("#firstStageCreate").css("display", "none");
+    $("#LoginPIN").css("display", "none");
+    $("#submitLoginName").show();
     $("#logInMain").css("display", "block");
     logIn = true;
     createUser = false;
@@ -885,7 +996,19 @@ $("#changeAvatar").on("click", function () {
 });
 //logout
 $("#logout").on("click", function () {
+  $("#findgamemain").css("display", "none");
+  findgame = false;
   logout();
+});
+//endgame
+$("#endgame").on("click", function () {
+  //reset scores
+  resetScores();
+  //hide engame
+  $("#endgame").css("display", "none");
+  //make find game visible again
+  $("#findgame").css("display", "block");
+  endGameFull();
 });
 //AVATAR STUFF:
 //turns chosen avatar red updates selected avatar

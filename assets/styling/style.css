@@ -325,6 +325,7 @@ header {
   border-radius: 0 0 8px 0;
 }
 .submitText {
+  position: relative;
   width: 100px;
   height: 45px;
   border: solid 4px rgba(255, 255, 255, 0.753);
